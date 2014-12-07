@@ -6,6 +6,11 @@
 
 package Servidor;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Arango Abello
@@ -17,6 +22,28 @@ public class Servidor extends javax.swing.JFrame {
      */
     public Servidor() {
         initComponents();
+        System.out.println(md5("abc5"));
+    }
+    
+    private String md5(String clave) {
+        MessageDigest claveMd5 = null;
+        try {
+            claveMd5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException ex) {
+        }
+        byte[] b = claveMd5.digest(clave.getBytes());
+
+        StringBuilder h = new StringBuilder(b.length);
+        for (int i = 0; i < b.length; i++) {
+            int u = b[i] & 255;
+                if (u < 16) {
+                    h.append("0").append(Integer.toHexString(u));
+                } 
+                else {
+                    h.append(Integer.toHexString(u));
+                }
+        }
+        return h.toString();
     }
 
     /**
@@ -70,7 +97,7 @@ public class Servidor extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Servidor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
