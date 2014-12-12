@@ -3,7 +3,7 @@ package Server;
 import java.io.*;
 import java.net.*;
 
-public class Proyecto {
+public class ServidorPrincipal {
 	public static void main(String[] args){
 		ServerSocket socketServ;
 		System.out.println("Esperando conexiones");

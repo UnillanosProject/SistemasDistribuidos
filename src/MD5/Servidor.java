@@ -25,7 +25,7 @@ public class Servidor extends javax.swing.JFrame {
             else{
                 caracteresAux[i]=""+(char)('a'+i-1);
             }
-            System.out.println(caracteresAux[i]);
+            //System.out.println(caracteresAux[i]);
             
         }
         return caracteresAux;

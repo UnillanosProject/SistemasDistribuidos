@@ -1,11 +1,11 @@
-package Client;
+package Server;
 
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 import javax.swing.*;
 
-public class Cliente {
+public class Servidores {
 	String dirIP;
 	int numPuerto=9999;
 	Scanner sDato = new Scanner(System.in);
@@ -37,7 +37,7 @@ public class Cliente {
 	}
 	
 	public static void main(String[] args) {
-		new Cliente().conexiones();
+		new Servidores().conexiones();
 
 	}
 
