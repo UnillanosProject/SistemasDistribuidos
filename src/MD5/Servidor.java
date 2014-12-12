@@ -56,7 +56,8 @@ public class Servidor extends javax.swing.JFrame {
                             for (int n = 1; n < caracteres.length; n++) {
                                 actual=caracteres[i]+caracteres[j]+caracteres[k]+caracteres[l]+caracteres[m]+caracteres[n];
                                 if (md5(actual).equals(clave)) {
-                                    JOptionPane.showMessageDialog(this, "La clave es: "+actual, "Se ha encontrado la clave", JOptionPane.INFORMATION_MESSAGE);
+                                    System.out.println("Clave:"+actual);
+                                    //JOptionPane.showMessageDialog(this, "La clave es: "+actual, "Se ha encontrado la clave", JOptionPane.INFORMATION_MESSAGE);
                                     return actual;
                                 }
                                 procesados++;
