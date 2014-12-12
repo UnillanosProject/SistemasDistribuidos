@@ -29,19 +29,16 @@ public class Servidor extends javax.swing.JFrame {
     }
     
     private String[] llenarCaracteres(){
-        String[] caracteresAux=new String[38];
+        String[] caracteresAux=new String[37];
         caracteresAux[0]="";
         for (int i = 1; i < caracteresAux.length; i++) {
-            if (i==27) {
-                caracteresAux[i]="ñ";
-            }
-            else if (i>26) {
-                caracteresAux[i]=""+(char)('0'+i-28);
+            if (i>26) {
+                caracteresAux[i]=""+(char)('0'+i-27);
             }
             else{
                 caracteresAux[i]=""+(char)('a'+i-1);
             }
-//            System.out.println(caracteresAux[i]);
+            System.out.println(caracteresAux[i]);
             
         }
         return caracteresAux;
