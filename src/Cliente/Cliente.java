@@ -13,6 +13,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,7 +33,6 @@ public class Cliente extends javax.swing.JFrame {
     private HiloProcess hiloProcess;
     private HiloConex hiloConex;
     private int inI,inJ;
-    public boolean finalizado;
     
     public Cliente() {
         initComponents();
@@ -45,7 +46,8 @@ public class Cliente extends javax.swing.JFrame {
 public class HiloConex extends Thread{   
     
     Cliente cliente;
-
+    DataInputStream in;
+    DataOutputStream out;
         public HiloConex(Cliente cliente) {
             this.cliente = cliente;
         }
@@ -62,8 +64,8 @@ public class HiloConex extends Thread{
                         estado.setForeground(Color.BLUE);
 			estado.setText("Conectado");
 			
-                        DataInputStream in = new DataInputStream(b.getInputStream());
-			DataOutputStream out = new DataOutputStream(b.getOutputStream());
+                        in = new DataInputStream(b.getInputStream());
+			out = new DataOutputStream(b.getOutputStream());
                         out.writeUTF("Esperando clave");
                         mensajeIn = in.readUTF();
                         md5.setClaveMd5(mensajeIn);
@@ -90,9 +92,18 @@ public class HiloConex extends Thread{
 			}while(!mensajeIn.equals("Finalizar"));
                         
 			 System.out.println("Procesamiento Finalizado");
+                         JOptionPane.showMessageDialog(cliente, "La clave se ha encontrado", "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
 		} catch (HeadlessException | IOException e) {	}
 		
 	}
+    
+    public void avisarClaveEncontrada(){
+        try {
+            out.writeUTF("Clave Encontrada");
+        } catch (IOException ex) {
+        }
+    }
+    
     }
 
 public class HiloProcess extends Thread{   
@@ -125,6 +136,10 @@ public class HiloProcess extends Thread{
     public void setProcesados(int procesados, String actual){
         labelProcesados.setText(""+procesados+", "+actual);
         labelRestantes.setText(""+(1727604-procesados));
+    }
+
+    public HiloConex getHiloConex() {
+        return hiloConex;
     }
 
 

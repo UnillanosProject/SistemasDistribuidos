@@ -3,6 +3,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class HilosConex extends Thread{
@@ -46,10 +48,9 @@ public class HilosConex extends Thread{
                             out.writeUTF("Iniciar");
                             out.writeUTF(asig.getInI()+","+asig.getInJ());
                         }
-                        if(mensaje.equals("Clave Encontrada")){
-                            out.writeUTF("Finalizar");
+                        if (mensaje.equals("Clave Encontrada")) {
+                            servidor.getHiloSocket().claveEncontrada();
                         }
-                        
 //                        Servidor servidor=new Servidor();
 //                        servidor.setClave(mensaje);
 //                        String clave = servidor.recorrer();
@@ -62,4 +63,15 @@ public class HilosConex extends Thread{
                     socketAlt.close();
 		}catch(IOException e){}
 	}
+        
+        public void finalizar(){
+            try {
+                out.writeUTF("Finalizar");
+                try {
+                    this.finalize();
+                } catch (Throwable ex) {
+                }
+            } catch (IOException ex) {
+            }
+        }
 }

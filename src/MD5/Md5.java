@@ -71,7 +71,7 @@ public class Md5 {
                                 actual=caracteres[i]+caracteres[j]+caracteres[k]+caracteres[l]+caracteres[m]+caracteres[n];
                                 if (md5(actual).equals(claveMd5)) {
                                     JOptionPane.showMessageDialog(null, "La clave es: "+actual, "Se ha encontrado la clave", JOptionPane.INFORMATION_MESSAGE);
-                                    cliente.finalizado=true;
+                                    cliente.getHiloConex().avisarClaveEncontrada();
                                     return;
                                 }
                                 procesados++;

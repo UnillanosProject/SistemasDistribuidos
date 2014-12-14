@@ -64,9 +64,11 @@ public class HiloSocket extends Thread{
         
     Servidor servidor;
     int puerto;
+    ArrayList<HilosConex> hilosConex;
         public HiloSocket(Servidor servidor) {
             this.servidor = servidor;
             puerto=9999;
+            hilosConex=new ArrayList<>();
         }
         
         @Override
@@ -81,13 +83,26 @@ public class HiloSocket extends Thread{
                                 labelConectados.setText(""+(Integer.valueOf(labelConectados.getText())+1));
 				HilosConex.numCliente++;
 //				System.out.println("Se conectó cliente "+HilosConex.numCliente);
-				new HilosConex(servidor,socket,HilosConex.numCliente,md5.getClaveMd5(),asignar()).start();
+				HilosConex hilo=new HilosConex(servidor,socket,HilosConex.numCliente,md5.getClaveMd5(),asignar());
+                                hilo.start();
+                                hilosConex.add(hilo);
 			}
 		}catch(IOException e){}
         }
+        
+        public void claveEncontrada(){
+            for (int i = 0; i < hilosConex.size(); i++) {
+                hilosConex.get(i).finalizar();
+            }
+        }
 
 }
+
+    public HiloSocket getHiloSocket() {
+        return hiloSocket;
+    }
     
+//
     
     /**
      * This method is called from within the constructor to initialize the form.
