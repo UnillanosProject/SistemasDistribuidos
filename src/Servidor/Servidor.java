@@ -105,7 +105,7 @@ public class HiloSocket extends Thread{
     }
     
     public void mostrarClave(String clave){
-        JOptionPane.showMessageDialog(null, "La clave es: "+clave, "Se ha encontrado la clave", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "La clave es: "+clave, "Se ha encontrado la clave", JOptionPane.INFORMATION_MESSAGE);
     }
      
     /**
@@ -158,6 +158,11 @@ public class HiloSocket extends Thread{
 
         jButton1.setText("...");
         jButton1.setActionCommand("Key");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -369,9 +374,11 @@ public class HiloSocket extends Thread{
         hiloSocket.start();
     }//GEN-LAST:event_botonDescifrarActionPerformed
 
-    private void botonKeyActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         GeneradorMD5 obj=new GeneradorMD5();
-    }  
+        String clave = obj.md5("cra4e");
+        campoMd5.setText(clave);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonDescifrar;

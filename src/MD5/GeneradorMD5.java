@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 public class GeneradorMD5 {
     
-    private String md5(String clave) {
+    public String md5(String clave) {
         MessageDigest claveMd5 = null;
         try {
             claveMd5 = MessageDigest.getInstance("MD5");
@@ -29,6 +29,6 @@ public class GeneradorMD5 {
     
     public static void main(String[] args) {
         GeneradorMD5 obj=new GeneradorMD5();
-        System.out.println(obj.md5("fra4e"));
+        System.out.println(obj.md5("cra4e"));
     }
 }
