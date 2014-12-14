@@ -51,7 +51,7 @@ public class HilosConex extends Thread{
                         if (mensaje.equals("Clave Encontrada")) {
                             mensaje = in.readUTF();
                             servidor.getHiloSocket().claveEncontrada(mensaje);
-                        }
+                        } 
 //                        Servidor servidor=new Servidor();
 //                        servidor.setClave(mensaje);
 //                        String clave = servidor.recorrer();
