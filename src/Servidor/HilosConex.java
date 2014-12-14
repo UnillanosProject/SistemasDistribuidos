@@ -32,6 +32,7 @@ public class HilosConex extends Thread{
 		try{
                     while(!mensaje.equals("fin")){
                         mensaje = in.readUTF();
+                        System.out.println("Cliente ["+numCliente+"] dice: ["+mensaje+"]");
                         if (mensaje.equals("Esperando clave")) {
                             out.writeUTF(clave);
                             out.writeUTF("Iniciar");
@@ -43,7 +44,7 @@ public class HilosConex extends Thread{
                             out.writeUTF("Iniciar");
                             out.writeUTF(asig.getInI()+","+asig.getInJ());
                         }
-//                        System.out.println("Cliente ["+numCliente+"] dice: ["+mensaje+"]");
+                        
 //                        Servidor servidor=new Servidor();
 //                        servidor.setClave(mensaje);
 //                        String clave = servidor.recorrer();

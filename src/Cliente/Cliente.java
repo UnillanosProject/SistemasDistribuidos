@@ -79,6 +79,7 @@ public class HiloConex extends Thread{
                                 if (mensajeIn.equals("Iniciar")) {
                                     cliente.setTerminado(false);
                                     mensajeIn = in.readUTF();
+                                    System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
                                     String[] asignados=mensajeIn.split(",");
                                     inI=Integer.valueOf(asignados[0]);
                                     inJ=Integer.valueOf(asignados[1]);
@@ -117,9 +118,9 @@ public class HiloProcess extends Thread{
         }
     }
 
-    public void setProcesados(int procesados){
-        labelProcesados.setText(""+procesados);
-        labelRestantes.setText(""+(37*37*37*37-procesados));
+    public void setProcesados(int procesados, String actual){
+        labelProcesados.setText(""+procesados+", "+actual);
+        labelRestantes.setText(""+(1727604-procesados));
     }
 
     public boolean isTerminado() {

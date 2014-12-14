@@ -38,12 +38,17 @@ public ArrayList<Asignacion> asignaciones(){
     for (int i = 0; i < md5.getCaracteres().length; i++) {
         for (int j = 0; j < md5.getCaracteres().length; j++) {
             asignacionesAux.add(new Asignacion(i,j));
+            
+            if (i==0&&j==0) {
+                asignacionesAux.get(0).setProcesado(true);
+            }
         }
     }
     return asignacionesAux;
 }
 public Asignacion asignar(){
     for (int i = 0; i < asignaciones.size(); i++) {
+        System.out.println(asignaciones.get(i).isProcesado());
         if (!asignaciones.get(i).isProcesado()) {
             return asignaciones.get(i);
         }

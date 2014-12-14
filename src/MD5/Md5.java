@@ -74,7 +74,7 @@ public class Md5 {
                                     return;
                                 }
                                 procesados++;
-                                cliente.setProcesados(procesados);
+                                cliente.setProcesados(procesados,actual);
 //                                System.out.println("Procesados:"+procesados);
 //                                System.out.println(caracteres[i]+caracteres[j]+caracteres[k]+caracteres[l]+caracteres[m]+caracteres[n]);
                             }
