@@ -46,6 +46,9 @@ public class HilosConex extends Thread{
                             out.writeUTF("Iniciar");
                             out.writeUTF(asig.getInI()+","+asig.getInJ());
                         }
+                        if(mensaje.equals("Clave Encontrada")){
+                            out.writeUTF("Finalizar");
+                        }
                         
 //                        Servidor servidor=new Servidor();
 //                        servidor.setClave(mensaje);

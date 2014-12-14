@@ -31,6 +31,7 @@ public class Cliente extends javax.swing.JFrame {
     private HiloProcess hiloProcess;
     private HiloConex hiloConex;
     private int inI,inJ;
+    public boolean finalizado;
     
     public Cliente() {
         initComponents();
