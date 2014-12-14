@@ -93,10 +93,11 @@ public class HiloSocket extends Thread{
         }
         
         public void claveEncontrada(String clave){
-            servidor.mostrarClave(clave);
+//            servidor.mostrarClave(clave);
             for (int i = 0; i < hilosConex.size(); i++) {
                 hilosConex.get(i).finalizar();
             }
+            JOptionPane.showMessageDialog(servidor, "La clave es: "+clave, "Se ha encontrado la clave", JOptionPane.INFORMATION_MESSAGE);
         }
 
 }
@@ -104,9 +105,9 @@ public class HiloSocket extends Thread{
     public HiloSocket getHiloSocket() {
         return hiloSocket;
     }
-    
+ 
     public void mostrarClave(String clave){
-        JOptionPane.showMessageDialog(this, "La clave es: "+clave, "Se ha encontrado la clave", JOptionPane.INFORMATION_MESSAGE);
+        
     }
      
     /**
