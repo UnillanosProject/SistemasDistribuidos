@@ -7,14 +7,12 @@
 package Cliente;
 
 import MD5.Md5;
-import Servidor.Servidor;
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,26 +30,37 @@ public class Cliente extends javax.swing.JFrame {
     private Md5 md5;
     private HiloProcess hiloProcess;
     private HiloConex hiloConex;
-    private int fi,fj,fk,fl,fm,fn;
+    private int inI,inJ;
+    private boolean terminado;
     
     public Cliente() {
         initComponents();
         this.setLocationRelativeTo(null);
         numPuerto=9999;
         md5=new Md5(this);
-        hiloConex=new HiloConex();
-        hiloProcess=new HiloProcess();
+        hiloConex=new HiloConex(this);
+        hiloProcess=new HiloProcess(this);
+        terminado=false;
     }
 
 public class HiloConex extends Thread{   
     
+    Cliente cliente;
+
+        public HiloConex(Cliente cliente) {
+            this.cliente = cliente;
+        }
+    
+
     @Override
     public void run()
-	{	String mensajeOut,mensajeIn;
+	{
+            String mensajeOut,mensajeIn;
 		System.out.println("Conectandose al Servidor.... Abriendo Puerto "+numPuerto);
 		try {
 //			dirIP=JOptionPane.showInputDialog("Digite la IP del Servidor:");
 			Socket b = new Socket(dirIP,numPuerto);
+                        estado.setForeground(Color.BLUE);
 			estado.setText("Conectado");
 			
                         DataInputStream in = new DataInputStream(b.getInputStream());
@@ -62,17 +71,17 @@ public class HiloConex extends Thread{
                         labelMd5.setText(mensajeIn);
                         
 			do{
+                                if (terminado) {
+                                    out.writeUTF("Terminado");
+                                }
 				mensajeIn = in.readUTF();
 				System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
                                 if (mensajeIn.equals("Iniciar")) {
+                                    cliente.setTerminado(false);
                                     mensajeIn = in.readUTF();
                                     String[] asignados=mensajeIn.split(",");
-                                    fi=Integer.valueOf(asignados[0]);
-                                    fj=Integer.valueOf(asignados[1]);
-                                    fk=Integer.valueOf(asignados[2]);
-                                    fl=Integer.valueOf(asignados[3]);
-                                    fm=Integer.valueOf(asignados[4]);
-                                    fn=Integer.valueOf(asignados[5]);
+                                    inI=Integer.valueOf(asignados[0]);
+                                    inJ=Integer.valueOf(asignados[1]);
                                     out.writeUTF("Procesando");
                                     hiloProcess.start();
                                 }
@@ -86,27 +95,42 @@ public class HiloConex extends Thread{
 		} catch (HeadlessException | IOException e) {	}
 		
 	}
-}
+    }
 
 public class HiloProcess extends Thread{   
     
-     
+    Cliente cliente;
+
+        public HiloProcess(Cliente cliente) {
+            this.cliente = cliente;
+        }
+    
     @Override
     public void run(){
-           System.out.println("Asignados: "+fi+","+fj+","+fk+","+fl+","+fm+","+fn);
-           md5.recorrer(fi,fj,fk,fl,fm,fn);
+           System.out.println("Asignados: "+inI+","+inJ);
+           md5.recorrer(inI,inJ);
             try {
+                cliente.setTerminado(true);
                 this.finalize();
             } catch (Throwable ex) {
             }
         }
-}
+    }
 
     public void setProcesados(int procesados){
         labelProcesados.setText(""+procesados);
-        labelRestantes.setText(""+(fi*fj*fk*fl*fm*fn-procesados));
+        labelRestantes.setText(""+(37*37*37*37-procesados));
     }
 
+    public boolean isTerminado() {
+        return terminado;
+    }
+
+    public void setTerminado(boolean terminado) {
+        this.terminado = terminado;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,6 +159,7 @@ public class HiloProcess extends Thread{
         labelMd5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("MD5 Decrypter - Client");
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -195,7 +220,9 @@ public class HiloProcess extends Thread{
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Estado:");
 
+        estado.setForeground(new java.awt.Color(148, 47, 47));
         estado.setText("Desconectado");
+        estado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 

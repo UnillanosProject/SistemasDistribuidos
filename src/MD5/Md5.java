@@ -46,28 +46,28 @@ public class Md5 {
     }
     
     
-    public void recorrer(int fi,int fj,int fk,int fl,int fm,int fn){
-        int inJ=0,inK=0,inL=0,inM=0;
+    public void recorrer(int inI,int inJ){
+        int inK=0,inL=0,inM=0;
         int procesados=0;
         String actual;
-        for (int i = 0; i < fi; i++) {
+        for (int i = inI; i < inI+1; i++) {
             if (i==1) {
                 inJ=1;
             }
-            for (int j = inJ; j < fj; j++) {
+            for (int j = inJ; j < inJ+1; j++) {
                 if (j==1) {
                 inK=1;
                 }
-                for (int k = inK; k < fk; k++) {
+                for (int k = inK; k < caracteres.length; k++) {
                     if (k==1) {
                     inL=1;
                     }
-                    for (int l = inL; l < fl; l++) {
+                    for (int l = inL; l < caracteres.length; l++) {
                         if (l==1) {
                         inM=1;
                         }
-                        for (int m = inM; m < fm; m++) {
-                            for (int n = 1; n < fn; n++) {
+                        for (int m = inM; m < caracteres.length; m++) {
+                            for (int n = 1; n < caracteres.length; n++) {
                                 actual=caracteres[i]+caracteres[j]+caracteres[k]+caracteres[l]+caracteres[m]+caracteres[n];
                                 if (md5(actual).equals(claveMd5)) {
                                     JOptionPane.showMessageDialog(null, "La clave es: "+actual, "Se ha encontrado la clave", JOptionPane.INFORMATION_MESSAGE);
@@ -113,6 +113,10 @@ public class Md5 {
 
     public void setClaveMd5(String claveMd5) {
         this.claveMd5 = claveMd5;
+    }
+
+    public String[] getCaracteres() {
+        return caracteres;
     }
     
     

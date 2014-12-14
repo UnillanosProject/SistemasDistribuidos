@@ -10,6 +10,7 @@ import MD5.Md5;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,15 +23,34 @@ public class Servidor extends javax.swing.JFrame {
      */
     private HiloSocket hiloSocket;
     private Md5 md5;
+    private ArrayList<Asignacion> asignaciones;
     
     public Servidor() {
         initComponents();
         this.setLocationRelativeTo(null);
         hiloSocket=new HiloSocket(this);
         md5=new Md5();
+        asignaciones=asignaciones();
     }
     
-
+public ArrayList<Asignacion> asignaciones(){
+    ArrayList<Asignacion> asignacionesAux=new ArrayList<>();
+    for (int i = 0; i < md5.getCaracteres().length; i++) {
+        for (int j = 0; j < md5.getCaracteres().length; j++) {
+            asignacionesAux.add(new Asignacion(i,j));
+        }
+    }
+    return asignacionesAux;
+}
+public Asignacion asignar(){
+    for (int i = 0; i < asignaciones.size(); i++) {
+        if (!asignaciones.get(i).isProcesado()) {
+            return asignaciones.get(i);
+        }
+    }
+    return null;
+}
+    
 public class HiloSocket extends Thread{
         
     Servidor servidor;
@@ -52,7 +72,7 @@ public class HiloSocket extends Thread{
                                 labelConectados.setText(""+(Integer.valueOf(labelConectados.getText())+1));
 				HilosConex.numCliente++;
 //				System.out.println("Se conectó cliente "+HilosConex.numCliente);
-				new HilosConex(socket,HilosConex.numCliente,md5.getClaveMd5()).start();
+				new HilosConex(servidor,socket,HilosConex.numCliente,md5.getClaveMd5(),asignar()).start();
 			}
 		}catch(IOException e){}
         }
@@ -93,6 +113,7 @@ public class HiloSocket extends Thread{
         grafico2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("MD5 Decrypter - Server");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 

@@ -11,11 +11,15 @@ public class HilosConex extends Thread{
 	private DataOutputStream out;
 	static int numCliente;
         static String clave;
+        private Asignacion asig;
+        private Servidor servidor;
 	
-	public HilosConex(Socket socketAlt, int nC, String claveAux){
-		this.socketAlt = socketAlt;
+	public HilosConex(Servidor servidor,Socket socketAlt, int nC, String claveAux,Asignacion asig){
+		this.servidor=servidor;
+                this.socketAlt = socketAlt;
 		numCliente = nC;
                 clave=claveAux;
+                this.asig=asig;
 		try{
 			in = new DataInputStream(socketAlt.getInputStream());
 			out = new DataOutputStream(socketAlt.getOutputStream());
@@ -31,7 +35,13 @@ public class HilosConex extends Thread{
                         if (mensaje.equals("Esperando clave")) {
                             out.writeUTF(clave);
                             out.writeUTF("Iniciar");
-                            out.writeUTF("1,1,37,37,37,37");
+                            out.writeUTF(asig.getInI()+","+asig.getInJ());
+                        }
+                        if (mensaje.equals("Terminado")) {
+                            asig.setProcesado(true);
+                            asig=servidor.asignar();
+                            out.writeUTF("Iniciar");
+                            out.writeUTF(asig.getInI()+","+asig.getInJ());
                         }
 //                        System.out.println("Cliente ["+numCliente+"] dice: ["+mensaje+"]");
 //                        Servidor servidor=new Servidor();

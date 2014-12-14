@@ -29,6 +29,6 @@ public class GeneradorMD5 {
     
     public static void main(String[] args) {
         GeneradorMD5 obj=new GeneradorMD5();
-        System.out.println(obj.md5("ju94"));
+        System.out.println(obj.md5("fra4e"));
     }
 }
