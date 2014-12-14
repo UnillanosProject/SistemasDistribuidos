@@ -376,8 +376,9 @@ public class HiloSocket extends Thread{
     }//GEN-LAST:event_botonDescifrarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String Key = JOptionPane.showInputDialog(this, "Ingrese Clave a Cifrar", "Clave", JOptionPane.INFORMATION_MESSAGE);
         GeneradorMD5 obj=new GeneradorMD5();
-        String clave = obj.md5("cra4e");
+        String clave = obj.md5(Key);
         campoMd5.setText(clave);
     }//GEN-LAST:event_jButton1ActionPerformed
 
