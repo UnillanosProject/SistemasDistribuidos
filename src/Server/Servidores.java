@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 import javax.swing.*;
-import MD5.Servidor;
 
 public class Servidores {
 	String dirIP;
@@ -21,20 +20,18 @@ public class Servidores {
 			
 			DataOutputStream out = new DataOutputStream(b.getOutputStream());
 			do{
-                                DataInputStream in = new DataInputStream(b.getInputStream());
+				System.out.println("Digite el mensaje a enviar:");
+				mensajeOut = sDato.nextLine();
+				out.writeUTF(mensajeOut);
+				if(mensajeOut.equals("fin")) break;
+				System.out.println("Mensaje ["+mensajeOut+"] Enviado!");
+				System.out.println("Esperando Respuesta!...");
+				DataInputStream in = new DataInputStream(b.getInputStream());
 				mensajeIn = in.readUTF();
 				System.out.println(b.getInetAddress()+"Dice: "+mensajeIn);
-                                
-                                Servidor servidor=new Servidor();
-                                servidor.setClave(mensajeIn);
-
-				mensajeOut = servidor.recorrer();
-				out.writeUTF(mensajeOut);
-                                
-				if(mensajeOut.equals("No Encontrado")) break;
-				System.out.println("Clave: "+mensajeOut);
-			}while(!mensajeOut.equals("No Encontrado"));
-			 System.out.println("Procesamiento Finalizado");
+				
+			}while(!mensajeOut.equals("fin"));
+			 System.out.println("Cerro sesion");
 		} catch (Exception e) {	}
 		
 	}
