@@ -97,9 +97,10 @@ public class HiloConex extends Thread{
 		
 	}
     
-    public void avisarClaveEncontrada(){
+    public void avisarClaveEncontrada(String clave){
         try {
             out.writeUTF("Clave Encontrada");
+            out.writeUTF(clave);
         } catch (IOException ex) {
         }
     }

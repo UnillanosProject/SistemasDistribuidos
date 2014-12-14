@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -90,7 +91,7 @@ public class HiloSocket extends Thread{
 		}catch(IOException e){}
         }
         
-        public void claveEncontrada(){
+        public void claveEncontrada(String clave){
             for (int i = 0; i < hilosConex.size(); i++) {
                 hilosConex.get(i).finalizar();
             }
@@ -102,8 +103,10 @@ public class HiloSocket extends Thread{
         return hiloSocket;
     }
     
-//
-    
+    public void mostrarClave(String clave){
+        JOptionPane.showMessageDialog(null, "La clave es: "+clave, "Se ha encontrado la clave", JOptionPane.INFORMATION_MESSAGE);
+    }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

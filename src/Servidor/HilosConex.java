@@ -49,7 +49,8 @@ public class HilosConex extends Thread{
                             out.writeUTF(asig.getInI()+","+asig.getInJ());
                         }
                         if (mensaje.equals("Clave Encontrada")) {
-                            servidor.getHiloSocket().claveEncontrada();
+                            mensaje = in.readUTF();
+                            servidor.getHiloSocket().claveEncontrada(mensaje);
                         }
 //                        Servidor servidor=new Servidor();
 //                        servidor.setClave(mensaje);
@@ -67,10 +68,10 @@ public class HilosConex extends Thread{
         public void finalizar(){
             try {
                 out.writeUTF("Finalizar");
-                try {
-                    this.finalize();
-                } catch (Throwable ex) {
-                }
+//                try {
+//                    this.finalize();
+//                } catch (Throwable ex) {
+//                }
             } catch (IOException ex) {
             }
         }
