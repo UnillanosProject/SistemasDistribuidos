@@ -33,6 +33,14 @@ public class Servidor extends javax.swing.JFrame {
         asignaciones=asignaciones();
     }
     
+    public void removerDeArray(Asignacion asig){
+        for (int i = 0; i < asignaciones.size(); i++) {
+            if(asignaciones.get(i)==asig){
+                asignaciones.remove(i);
+            }
+        }
+    }
+    
 public ArrayList<Asignacion> asignaciones(){
     ArrayList<Asignacion> asignacionesAux=new ArrayList<>();
     for (int i = 0; i < md5.getCaracteres().length; i++) {
@@ -44,8 +52,8 @@ public ArrayList<Asignacion> asignaciones(){
 }
 public Asignacion asignar(){
     for (int i = 0; i < asignaciones.size(); i++) {
-        System.out.println(asignaciones.get(i).isProcesado());
-        if (!asignaciones.get(i).isProcesado()) {
+//        System.out.println(asignaciones.get(i).isAsignado());
+        if (!asignaciones.get(i).isAsignado()) {
             return asignaciones.get(i);
         }
     }

@@ -36,11 +36,13 @@ public class HilosConex extends Thread{
                         if (mensaje.equals("Esperando clave")) {
                             out.writeUTF(clave);
                             out.writeUTF("Iniciar");
+                            asig.setAsignado(true);
                             out.writeUTF(asig.getInI()+","+asig.getInJ());
                         }
                         if (mensaje.equals("Terminado")) {
-                            asig.setProcesado(true);
+                            servidor.removerDeArray(asig);
                             asig=servidor.asignar();
+                            asig.setAsignado(true);
                             out.writeUTF("Iniciar");
                             out.writeUTF(asig.getInI()+","+asig.getInJ());
                         }

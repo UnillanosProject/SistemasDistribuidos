@@ -11,23 +11,23 @@ package Servidor;
  * @author Arango Abello
  */
 public class Asignacion {
-    private boolean procesado;
+    private boolean asignado;
     private int inI,inJ;
 
     public Asignacion(int inI, int inJ) {
         this.inI = inI;
         this.inJ = inJ;
-        procesado=false;
+        asignado=false;
     }
 
-    public boolean isProcesado() {
-        return procesado;
+    public boolean isAsignado() {
+        return asignado;
     }
 
-    public void setProcesado(boolean procesado) {
-        this.procesado = procesado;
+    public void setAsignado(boolean asignado) {
+        this.asignado = asignado;
     }
-
+    
     public int getInI() {
         return inI;
     }
