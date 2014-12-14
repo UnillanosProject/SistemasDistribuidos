@@ -75,7 +75,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void servidorBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servidorBotonActionPerformed
         servidor=new Servidor();
-        cliente.setVisible(true);
+        servidor.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_servidorBotonActionPerformed
 
@@ -90,7 +90,7 @@ public class Principal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
