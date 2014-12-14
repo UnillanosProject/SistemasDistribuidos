@@ -6,6 +6,7 @@
 
 package MD5;
 
+import Cliente.Cliente;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.swing.JOptionPane;
@@ -18,9 +19,14 @@ public class Md5 {
     
     private final String[] caracteres;
     private String claveMd5;
+    private Cliente cliente;
     
     public Md5() {
         caracteres=llenarCaracteres();
+    }
+    public Md5(Cliente cliente) {
+        caracteres=llenarCaracteres();
+        this.cliente=cliente;
     }
     
     private String[] llenarCaracteres(){
@@ -33,42 +39,43 @@ public class Md5 {
             else{
                 caracteresAux[i]=""+(char)('a'+i-1);
             }
-            System.out.println(caracteresAux[i]);
+//            System.out.println(caracteresAux[i]);
             
         }
         return caracteresAux;
     }
     
     
-    public void recorrer(){
+    public void recorrer(int fi,int fj,int fk,int fl,int fm,int fn){
         int inJ=0,inK=0,inL=0,inM=0;
         int procesados=0;
         String actual;
-        for (int i = 0; i < caracteres.length; i++) {
+        for (int i = 0; i < fi; i++) {
             if (i==1) {
                 inJ=1;
             }
-            for (int j = inJ; j < caracteres.length; j++) {
+            for (int j = inJ; j < fj; j++) {
                 if (j==1) {
                 inK=1;
                 }
-                for (int k = inK; k < caracteres.length; k++) {
+                for (int k = inK; k < fk; k++) {
                     if (k==1) {
                     inL=1;
                     }
-                    for (int l = inL; l < caracteres.length; l++) {
+                    for (int l = inL; l < fl; l++) {
                         if (l==1) {
                         inM=1;
                         }
-                        for (int m = inM; m < caracteres.length; m++) {
-                            for (int n = 1; n < caracteres.length; n++) {
+                        for (int m = inM; m < fm; m++) {
+                            for (int n = 1; n < fn; n++) {
                                 actual=caracteres[i]+caracteres[j]+caracteres[k]+caracteres[l]+caracteres[m]+caracteres[n];
                                 if (md5(actual).equals(claveMd5)) {
                                     JOptionPane.showMessageDialog(null, "La clave es: "+actual, "Se ha encontrado la clave", JOptionPane.INFORMATION_MESSAGE);
                                     return;
                                 }
                                 procesados++;
-                                System.out.println("Procesados:"+procesados);
+                                cliente.setProcesados(procesados);
+//                                System.out.println("Procesados:"+procesados);
 //                                System.out.println(caracteres[i]+caracteres[j]+caracteres[k]+caracteres[l]+caracteres[m]+caracteres[n]);
                             }
                         }

@@ -46,7 +46,7 @@ public class HiloSocket extends Thread{
 		System.out.println("Esperando conexiones");
 		try{
 			socketServ = new ServerSocket(puerto);
-			while(HilosConex.numCliente < 10){
+			while(true){
 				Socket socket;
 				socket = socketServ.accept();
                                 labelConectados.setText(""+(Integer.valueOf(labelConectados.getText())+1));

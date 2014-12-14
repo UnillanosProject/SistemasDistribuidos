@@ -27,15 +27,18 @@ public class HilosConex extends Thread{
 		String mensaje="";
 		try{
                     while(!mensaje.equals("fin")){
-                        out.writeUTF(clave);
-//                        mensaje = in.readUTF();
+                        mensaje = in.readUTF();
+                        if (mensaje.equals("Esperando clave")) {
+                            out.writeUTF(clave);
+                            out.writeUTF("Iniciar");
+                            out.writeUTF("1,1,37,37,37,37");
+                        }
 //                        System.out.println("Cliente ["+numCliente+"] dice: ["+mensaje+"]");
 //                        Servidor servidor=new Servidor();
 //                        servidor.setClave(mensaje);
 //                        String clave = servidor.recorrer();
 //                        out.writeUTF(clave);
-                        out.writeUTF("Iniciar");
-                        out.writeUTF("");
+                        
                     }
                     System.out.println("Cliente ["+numCliente+"] se Desconecto!!");
                     numCliente--;

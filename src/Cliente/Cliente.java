@@ -31,19 +31,24 @@ public class Cliente extends javax.swing.JFrame {
     private int numPuerto;
     private Md5 md5;
     private HiloProcess hiloProcess;
+    private HiloConex hiloConex;
+    private int fi,fj,fk,fl,fm,fn;
     
     public Cliente() {
         initComponents();
         this.setLocationRelativeTo(null);
         numPuerto=9999;
-        md5=new Md5();
-        hiloProcess=new HiloProcess(this,md5);
+        md5=new Md5(this);
+        hiloConex=new HiloConex();
+        hiloProcess=new HiloProcess();
     }
 
+public class HiloConex extends Thread{   
     
-    public void conexion()
+    @Override
+    public void run()
 	{	String mensajeOut,mensajeIn;
-		System.out.println("Conectandose al Servidor.... Abriendo Puerto"+numPuerto);
+		System.out.println("Conectandose al Servidor.... Abriendo Puerto "+numPuerto);
 		try {
 //			dirIP=JOptionPane.showInputDialog("Digite la IP del Servidor:");
 			Socket b = new Socket(dirIP,numPuerto);
@@ -51,15 +56,24 @@ public class Cliente extends javax.swing.JFrame {
 			
                         DataInputStream in = new DataInputStream(b.getInputStream());
 			DataOutputStream out = new DataOutputStream(b.getOutputStream());
-                        System.out.println("Esperando clave");
+                        out.writeUTF("Esperando clave");
                         mensajeIn = in.readUTF();
                         md5.setClaveMd5(mensajeIn);
                         labelMd5.setText(mensajeIn);
                         
 			do{
 				mensajeIn = in.readUTF();
-				System.out.println(b.getInetAddress()+"Dice: "+mensajeIn);
+				System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
                                 if (mensajeIn.equals("Iniciar")) {
+                                    mensajeIn = in.readUTF();
+                                    String[] asignados=mensajeIn.split(",");
+                                    fi=Integer.valueOf(asignados[0]);
+                                    fj=Integer.valueOf(asignados[1]);
+                                    fk=Integer.valueOf(asignados[2]);
+                                    fl=Integer.valueOf(asignados[3]);
+                                    fm=Integer.valueOf(asignados[4]);
+                                    fn=Integer.valueOf(asignados[5]);
+                                    out.writeUTF("Procesando");
                                     hiloProcess.start();
                                 }
 //				out.writeUTF(mensajeOut);
@@ -72,26 +86,27 @@ public class Cliente extends javax.swing.JFrame {
 		} catch (HeadlessException | IOException e) {	}
 		
 	}
+}
+
+public class HiloProcess extends Thread{   
     
-public class HiloProcess extends Thread{
-        
-    Cliente cliente;
-    Md5 md5;
-        public HiloProcess(Cliente cliente,Md5 md5) {
-            this.cliente = cliente;
-            this.md5 = md5;
-        }
-        
-        @Override
-        public void run(){
-           md5.recorrer();
+     
+    @Override
+    public void run(){
+           System.out.println("Asignados: "+fi+","+fj+","+fk+","+fl+","+fm+","+fn);
+           md5.recorrer(fi,fj,fk,fl,fm,fn);
             try {
                 this.finalize();
             } catch (Throwable ex) {
             }
         }
-
 }
+
+    public void setProcesados(int procesados){
+        labelProcesados.setText(""+procesados);
+        labelRestantes.setText(""+(fi*fj*fk*fl*fm*fn-procesados));
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,11 +145,9 @@ public class HiloProcess extends Thread{
         jLabel4.setText("Restantes Asignados:");
 
         labelProcesados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelProcesados.setText("99999999");
         labelProcesados.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelRestantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelRestantes.setText("99999999");
         labelRestantes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -155,12 +168,13 @@ public class HiloProcess extends Thread{
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(labelProcesados)
-                    .addComponent(labelRestantes))
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelRestantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelProcesados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)))
                 .addContainerGap())
         );
 
@@ -240,7 +254,6 @@ public class HiloProcess extends Thread{
         jLabel5.setText("Clave MD5:");
 
         labelMd5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelMd5.setText("ab57a4df845154784545ass");
         labelMd5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -258,9 +271,9 @@ public class HiloProcess extends Thread{
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(labelMd5))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelMd5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -281,8 +294,8 @@ public class HiloProcess extends Thread{
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -290,8 +303,12 @@ public class HiloProcess extends Thread{
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConectarActionPerformed
+        if (estado.getText().equals("Conectado")) {
+            JOptionPane.showMessageDialog(this, "Ya está conectado", "Conexión", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         dirIP=ipServidor.getText();
-        conexion();
+        hiloConex.start();
     }//GEN-LAST:event_botonConectarActionPerformed
 
 
