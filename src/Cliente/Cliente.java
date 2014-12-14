@@ -31,7 +31,6 @@ public class Cliente extends javax.swing.JFrame {
     private HiloProcess hiloProcess;
     private HiloConex hiloConex;
     private int inI,inJ;
-    private boolean terminado;
     
     public Cliente() {
         initComponents();
@@ -39,8 +38,7 @@ public class Cliente extends javax.swing.JFrame {
         numPuerto=9999;
         md5=new Md5(this);
         hiloConex=new HiloConex(this);
-        hiloProcess=new HiloProcess(this);
-        terminado=false;
+//        hiloProcess=new HiloProcess(this);
     }
 
 public class HiloConex extends Thread{   
@@ -71,19 +69,17 @@ public class HiloConex extends Thread{
                         labelMd5.setText(mensajeIn);
                         
 			do{
-                                if (terminado) {
-                                    out.writeUTF("Terminado");
-                                }
 				mensajeIn = in.readUTF();
 				System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
                                 if (mensajeIn.equals("Iniciar")) {
-                                    cliente.setTerminado(false);
                                     mensajeIn = in.readUTF();
                                     System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
                                     String[] asignados=mensajeIn.split(",");
                                     inI=Integer.valueOf(asignados[0]);
                                     inJ=Integer.valueOf(asignados[1]);
                                     out.writeUTF("Procesando");
+                                    hiloProcess=new HiloProcess(cliente);
+                                    hiloProcess.setOut(out);
                                     hiloProcess.start();
                                 }
 //				out.writeUTF(mensajeOut);
@@ -101,6 +97,7 @@ public class HiloConex extends Thread{
 public class HiloProcess extends Thread{   
     
     Cliente cliente;
+    DataOutputStream out;
 
         public HiloProcess(Cliente cliente) {
             this.cliente = cliente;
@@ -111,25 +108,24 @@ public class HiloProcess extends Thread{
            System.out.println("Asignados: "+inI+","+inJ);
            md5.recorrer(inI,inJ);
             try {
-                cliente.setTerminado(true);
+//                cliente.setTerminado(true);
+                out.writeUTF("Terminado");
                 this.finalize();
             } catch (Throwable ex) {
             }
         }
-    }
+
+        public void setOut(DataOutputStream out) {
+            this.out = out;
+        }
+    
+}
 
     public void setProcesados(int procesados, String actual){
         labelProcesados.setText(""+procesados+", "+actual);
         labelRestantes.setText(""+(1727604-procesados));
     }
 
-    public boolean isTerminado() {
-        return terminado;
-    }
-
-    public void setTerminado(boolean terminado) {
-        this.terminado = terminado;
-    }
 
     
     /**
