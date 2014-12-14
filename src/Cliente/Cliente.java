@@ -93,6 +93,7 @@ public class HiloConex extends Thread{
                         
 			 System.out.println("Procesamiento Finalizado");
                          JOptionPane.showMessageDialog(cliente, "La clave se ha encontrado", "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
+                         hiloProcess.stop();
 		} catch (HeadlessException | IOException e) {	}
 		
 	}

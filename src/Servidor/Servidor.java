@@ -93,6 +93,7 @@ public class HiloSocket extends Thread{
         }
         
         public void claveEncontrada(String clave){
+            servidor.mostrarClave(clave);
             for (int i = 0; i < hilosConex.size(); i++) {
                 hilosConex.get(i).finalizar();
             }
