@@ -36,6 +36,7 @@ public class Servidor extends javax.swing.JFrame {
         hiloSocket=new HiloSocket(this);
         md5=new Md5();
         asignaciones=asignaciones();
+        panelGraficoPrincipal.add(new PanelGraficaPrincipal());
     }
     
     public void disminuirConectados(){
@@ -163,8 +164,7 @@ public class Velocidad extends Thread{
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         labelConectados = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        graficoPrincipal = new javax.swing.JLabel();
+        panelGraficoPrincipal = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -178,8 +178,6 @@ public class Velocidad extends Thread{
         selector1 = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
         selector2 = new javax.swing.JComboBox();
-        grafico1 = new javax.swing.JLabel();
-        grafico2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MD5 Decrypter - Server");
@@ -243,26 +241,17 @@ public class Velocidad extends Thread{
                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panelGraficoPrincipal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        graficoPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        graficoPrincipal.setText("Gráfico principal");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(graficoPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
-                .addContainerGap())
+        javax.swing.GroupLayout panelGraficoPrincipalLayout = new javax.swing.GroupLayout(panelGraficoPrincipal);
+        panelGraficoPrincipal.setLayout(panelGraficoPrincipalLayout);
+        panelGraficoPrincipalLayout.setHorizontalGroup(
+            panelGraficoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 353, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(graficoPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        panelGraficoPrincipalLayout.setVerticalGroup(
+            panelGraficoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 424, Short.MAX_VALUE)
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -294,7 +283,6 @@ public class Velocidad extends Thread{
         labelClave.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
         labelClave.setForeground(new java.awt.Color(53, 155, 35));
         labelClave.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelClave.setText("edison");
         labelClave.setToolTipText("");
         labelClave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(1, 1, 1)));
 
@@ -346,12 +334,6 @@ public class Velocidad extends Thread{
 
         selector2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "192.168.10.106", "Item 2", "Item 3", "Item 4" }));
 
-        grafico1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        grafico1.setText("Gráfico 1");
-
-        grafico2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        grafico2.setText("Gráfico 2");
-
         javax.swing.GroupLayout panelGraficosLayout = new javax.swing.GroupLayout(panelGraficos);
         panelGraficos.setLayout(panelGraficosLayout);
         panelGraficosLayout.setHorizontalGroup(
@@ -360,8 +342,6 @@ public class Velocidad extends Thread{
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGraficosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(grafico2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(grafico1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(selector1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(selector2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -370,15 +350,11 @@ public class Velocidad extends Thread{
             panelGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGraficosLayout.createSequentialGroup()
                 .addComponent(selector1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(grafico1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(175, 175, 175)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(selector2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(grafico2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -386,7 +362,7 @@ public class Velocidad extends Thread{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelGraficoPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(panelGraficos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -398,7 +374,7 @@ public class Velocidad extends Thread{
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelGraficoPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelGraficos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -431,9 +407,6 @@ public class Velocidad extends Thread{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonDescifrar;
     private javax.swing.JTextField campoMd5;
-    private javax.swing.JLabel grafico1;
-    private javax.swing.JLabel grafico2;
-    private javax.swing.JLabel graficoPrincipal;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -441,7 +414,6 @@ public class Velocidad extends Thread{
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
@@ -450,6 +422,7 @@ public class Velocidad extends Thread{
     private javax.swing.JLabel labelProcesados;
     private javax.swing.JLabel labelRestantes;
     private javax.swing.JLabel labelVelocidad;
+    private javax.swing.JPanel panelGraficoPrincipal;
     private javax.swing.JPanel panelGraficos;
     private javax.swing.JComboBox selector1;
     private javax.swing.JComboBox selector2;
