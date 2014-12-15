@@ -106,9 +106,9 @@ public class HiloSocket extends Thread{
 //            servidor.mostrarClave(clave);
             for (int i = 0; i < hilosConex.size(); i++) {
                 hilosConex.get(i).finalizar();
-            }
-            JOptionPane.showMessageDialog(servidor, "La clave se ha encontrado", "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
+            }  
             labelClave.setText(clave);
+            JOptionPane.showMessageDialog(servidor, "La clave se ha encontrado", "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
         }
 
 public class Velocidad extends Thread{
@@ -291,8 +291,12 @@ public class Velocidad extends Thread{
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Clave");
 
+        labelClave.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
+        labelClave.setForeground(new java.awt.Color(8, 27, 91));
         labelClave.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelClave.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        labelClave.setText("gt99a4");
+        labelClave.setToolTipText("");
+        labelClave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(1, 1, 1)));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
