@@ -212,7 +212,6 @@ public class HiloLabel extends Thread{
         jLabel1 = new javax.swing.JLabel();
         estado = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         grafico = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -294,13 +293,6 @@ public class HiloLabel extends Thread{
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jButton2.setText("Desconectar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -310,11 +302,9 @@ public class HiloLabel extends Thread{
                 .addComponent(labelClave)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ipServidor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(botonConectar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -331,8 +321,7 @@ public class HiloLabel extends Thread{
                     .addComponent(ipServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonConectar)
                     .addComponent(jLabel1)
-                    .addComponent(estado)
-                    .addComponent(jButton2))
+                    .addComponent(estado))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
@@ -408,27 +397,22 @@ public class HiloLabel extends Thread{
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConectarActionPerformed
-        if (estado.getText().equals("Conectado")) {
-            JOptionPane.showMessageDialog(this, "Ya está conectado", "Conexión", JOptionPane.INFORMATION_MESSAGE);
-            return;
+        if(botonConectar.getText().equals("Conectar")){
+            dirIP=ipServidor.getText();
+            hiloConex=new HiloConex(this);  
+            hiloConex.start();
+            botonConectar.setText("Desconectar");  
         }
-        dirIP=ipServidor.getText();
-        hiloConex=new HiloConex(this);  
-        hiloConex.start();
+        if(botonConectar.getText().equals("Desconectar")){
+            estado.setForeground(Color.RED);
+            estado.setText("Desconectado");
+            hiloConex.stop();
+            hiloLabel.stop();
+            hiloProcess.stop();
+            Inicio=true;
+            botonConectar.setText("Conectar");  
+        }
     }//GEN-LAST:event_botonConectarActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (estado.getText().equals("Desconectado")) {
-            JOptionPane.showMessageDialog(this, "Ya está Desconectado", "Conexión", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        estado.setForeground(Color.RED);
-        estado.setText("Desconectado");
-        hiloConex.stop();
-        hiloLabel.stop();
-        hiloProcess.stop();
-        Inicio=true;
-    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -436,7 +420,6 @@ public class HiloLabel extends Thread{
     private javax.swing.JLabel estado;
     private javax.swing.JLabel grafico;
     private javax.swing.JTextField ipServidor;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
