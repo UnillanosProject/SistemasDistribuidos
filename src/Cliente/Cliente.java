@@ -7,6 +7,7 @@
 package Cliente;
 
 import MD5.Md5;
+import Servidor.Servidor;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.io.DataInputStream;
@@ -210,6 +211,7 @@ public class HiloLabel extends Thread{
         jLabel1 = new javax.swing.JLabel();
         estado = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         grafico = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -222,10 +224,10 @@ public class HiloLabel extends Thread{
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Procesados:");
+        jLabel3.setText("Procesados");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Restantes Asignados:");
+        jLabel4.setText("Restantes Asignados");
 
         labelProcesados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelProcesados.setText("0");
@@ -234,6 +236,7 @@ public class HiloLabel extends Thread{
         labelRestantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelRestantes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        labelActual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelActual.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         labelActual.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -247,8 +250,8 @@ public class HiloLabel extends Thread{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelProcesados, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelActual, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelActual, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelRestantes, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -271,7 +274,7 @@ public class HiloLabel extends Thread{
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelClave.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelClave.setText("IP del Servidor:");
+        labelClave.setText("IP Servidor");
 
         ipServidor.setToolTipText("Clave");
 
@@ -283,13 +286,19 @@ public class HiloLabel extends Thread{
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Estado:");
+        jLabel1.setText("Estado");
 
         estado.setForeground(new java.awt.Color(148, 47, 47));
         estado.setText("Desconectado");
-        estado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jButton2.setText("Desconectar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -299,16 +308,18 @@ public class HiloLabel extends Thread{
                 .addContainerGap()
                 .addComponent(labelClave)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ipServidor, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botonConectar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ipServidor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonConectar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(6, 6, 6))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,7 +330,8 @@ public class HiloLabel extends Thread{
                     .addComponent(ipServidor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonConectar)
                     .addComponent(jLabel1)
-                    .addComponent(estado))
+                    .addComponent(estado)
+                    .addComponent(jButton2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
@@ -343,7 +355,7 @@ public class HiloLabel extends Thread{
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Clave MD5:");
+        jLabel5.setText("Clave MD5");
 
         labelMd5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelMd5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -355,8 +367,8 @@ public class HiloLabel extends Thread{
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(labelMd5, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(labelMd5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(108, 108, 108))
         );
         jPanel5Layout.setVerticalGroup(
@@ -403,12 +415,26 @@ public class HiloLabel extends Thread{
         hiloConex.start();
     }//GEN-LAST:event_botonConectarActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (estado.getText().equals("Desconectado")) {
+            JOptionPane.showMessageDialog(this, "Ya está Desconectado", "Conexión", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        estado.setForeground(Color.RED);
+        estado.setText("Desconectado");
+        try {
+            hiloConex.out.writeUTF("fin");
+        } catch (IOException ex) {
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonConectar;
     private javax.swing.JLabel estado;
     private javax.swing.JLabel grafico;
     private javax.swing.JTextField ipServidor;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
