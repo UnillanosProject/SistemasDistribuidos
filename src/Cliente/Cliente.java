@@ -437,8 +437,12 @@ public class Contador extends Thread{
             estado.setForeground(Color.RED);
             estado.setText("Desconectado");
             hiloConex.stop();
-            hiloLabel.stop();
-            hiloProcess.stop();
+            if (hiloLabel!=null) {
+                hiloLabel.stop();
+            }
+            if (hiloProcess!=null) {
+                hiloProcess.stop();
+            } 
             Inicio=true;
             botonConectar.setText("Conectar");  
             return;
