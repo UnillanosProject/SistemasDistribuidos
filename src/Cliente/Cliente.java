@@ -214,6 +214,7 @@ public class Contador extends Thread{
             hiloConex.stop();
             hiloConex=new HiloConex(cliente);
             JOptionPane.showMessageDialog(cliente, "No se ha podido conectar al servidor", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+            botonConectar.setText("Conectar");
         }
     }
     }
