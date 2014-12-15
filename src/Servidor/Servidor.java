@@ -108,7 +108,7 @@ public class HiloSocket extends Thread{
                 hilosConex.get(i).finalizar();
             }  
             labelClave.setText(clave);
-            JOptionPane.showMessageDialog(servidor, "La clave se ha encontrado", "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(servidor, "La clave es "+clave, "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
         }
 
 public class Velocidad extends Thread{
