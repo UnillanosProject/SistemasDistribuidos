@@ -7,6 +7,7 @@
 package Cliente;
 
 import MD5.Md5;
+import Servidor.Servidor;
 import java.awt.Color;
 import java.awt.HeadlessException;
 import java.io.DataInputStream;
@@ -90,8 +91,9 @@ public class HiloConex extends Thread{
                                     String[] asignados=mensajeIn.split(",");
                                     inI=Integer.valueOf(asignados[0]);
                                     inJ=Integer.valueOf(asignados[1]);
-                                    hiloLabel.setOut(out);
                                     if(Inicio){
+                                        hiloLabel=new HiloLabel(cliente);
+                                        hiloLabel.setOut(out);
                                         hiloLabel.start();
                                     }
                                     Inicio = false;
@@ -250,10 +252,10 @@ public class Contador extends Thread{
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Procesados:");
+        jLabel3.setText("Procesados");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Restantes Asignados:");
+        jLabel4.setText("Restantes Asignados");
 
         labelProcesados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelProcesados.setText("0");
@@ -262,6 +264,7 @@ public class Contador extends Thread{
         labelRestantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelRestantes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        labelActual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelActual.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         labelActual.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -275,8 +278,8 @@ public class Contador extends Thread{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelProcesados, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelActual, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelActual, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelRestantes, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -299,7 +302,7 @@ public class Contador extends Thread{
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelClave.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelClave.setText("IP del Servidor:");
+        labelClave.setText("IP Servidor");
 
         ipServidor.setToolTipText("Clave");
 
@@ -311,11 +314,10 @@ public class Contador extends Thread{
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Estado:");
+        jLabel1.setText("Estado");
 
         estado.setForeground(new java.awt.Color(148, 47, 47));
         estado.setText("Desconectado");
-        estado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -327,16 +329,16 @@ public class Contador extends Thread{
                 .addContainerGap()
                 .addComponent(labelClave)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ipServidor, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botonConectar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ipServidor)
+                .addGap(18, 18, 18)
+                .addComponent(botonConectar)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(6, 6, 6))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,7 +373,7 @@ public class Contador extends Thread{
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Clave MD5:");
+        jLabel5.setText("Clave MD5");
 
         labelMd5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelMd5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -383,8 +385,8 @@ public class Contador extends Thread{
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(labelMd5, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(labelMd5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(108, 108, 108))
         );
         jPanel5Layout.setVerticalGroup(
@@ -423,12 +425,21 @@ public class Contador extends Thread{
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConectarActionPerformed
-        if (estado.getText().equals("Conectado")) {
-            JOptionPane.showMessageDialog(this, "Ya está conectado", "Conexión", JOptionPane.INFORMATION_MESSAGE);
-            return;
+        if(botonConectar.getText().equals("Conectar")){
+            dirIP=ipServidor.getText();
+            hiloConex=new HiloConex(this);  
+            hiloConex.start();
+            botonConectar.setText("Desconectar");  
         }
-        dirIP=ipServidor.getText();
-        hiloConex.start();
+        if(botonConectar.getText().equals("Desconectar")){
+            estado.setForeground(Color.RED);
+            estado.setText("Desconectado");
+            hiloConex.stop();
+            hiloLabel.stop();
+            hiloProcess.stop();
+            Inicio=true;
+            botonConectar.setText("Conectar");  
+        }
     }//GEN-LAST:event_botonConectarActionPerformed
 
 
