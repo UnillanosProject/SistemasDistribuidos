@@ -430,6 +430,7 @@ public class Contador extends Thread{
             hiloConex=new HiloConex(this);  
             hiloConex.start();
             botonConectar.setText("Desconectar");  
+            return;
         }
         if(botonConectar.getText().equals("Desconectar")){
             estado.setForeground(Color.RED);
@@ -439,6 +440,7 @@ public class Contador extends Thread{
             hiloProcess.stop();
             Inicio=true;
             botonConectar.setText("Conectar");  
+            return;
         }
     }//GEN-LAST:event_botonConectarActionPerformed
 
