@@ -36,6 +36,10 @@ public class Servidor extends javax.swing.JFrame {
         asignaciones=asignaciones();
     }
     
+    public void disminuirConectados(){
+        labelConectados.setText((Integer.valueOf(labelConectados.getText())-1)+"");
+    }
+    
     public void removerDeArray(Asignacion asig){
         for (int i = 0; i < asignaciones.size(); i++) {
             if(asignaciones.get(i)==asig){

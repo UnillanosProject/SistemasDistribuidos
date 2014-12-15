@@ -148,6 +148,7 @@ public class HiloProcess extends Thread{
 
     public void setProcesados(int procesados, String actual){
         labelProcesados.setText(""+procesados);
+        labelActual.setText(""+actual);
 //        labelProcesados.setText(""+procesados+", "+actual);
         labelRestantes.setText(""+(1727604-procesados));
     }
@@ -201,6 +202,7 @@ public class HiloLabel extends Thread{
         jLabel4 = new javax.swing.JLabel();
         labelProcesados = new javax.swing.JLabel();
         labelRestantes = new javax.swing.JLabel();
+        labelActual = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         labelClave = new javax.swing.JLabel();
         ipServidor = new javax.swing.JTextField();
@@ -232,6 +234,9 @@ public class HiloLabel extends Thread{
         labelRestantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelRestantes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        labelActual.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        labelActual.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -240,7 +245,9 @@ public class HiloLabel extends Thread{
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelProcesados, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelProcesados, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelActual, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -253,7 +260,8 @@ public class HiloLabel extends Thread{
                 .addContainerGap(12, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelRestantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelProcesados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelProcesados)
+                    .addComponent(labelActual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(jLabel4)))
@@ -410,6 +418,7 @@ public class HiloLabel extends Thread{
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel labelActual;
     private javax.swing.JLabel labelClave;
     private javax.swing.JLabel labelMd5;
     private javax.swing.JLabel labelProcesados;

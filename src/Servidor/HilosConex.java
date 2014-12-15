@@ -94,16 +94,18 @@ public class Contador extends Thread{
     int tiempo=0;
     @Override
     public void run(){
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 3; i++) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(1000);
             } catch (InterruptedException ex) {
             }
             tiempo=tiempo+100;
-            System.out.println(tiempo);
+            //System.out.println(tiempo);
         }
         if (tiempo>=3000) {
             System.out.println("Cliente murió");
+            asig.setAsignado(false);
+            servidor.disminuirConectados();
         }
     }
 }
