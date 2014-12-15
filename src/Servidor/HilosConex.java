@@ -16,7 +16,7 @@ public class HilosConex extends Thread{
         private Asignacion asig;
         private Servidor servidor;
         private Contador contador;
-        int vel;
+        long vel;
 	
 	public HilosConex(Servidor servidor,Socket socketAlt, int nC, String claveAux,Asignacion asig){
 		this.servidor=servidor;
@@ -50,7 +50,7 @@ public class HilosConex extends Thread{
                         }
                         if(mensaje.equals("Procesando")){
                             mensaje = in.readUTF();
-                            aumProcess(Integer.valueOf(mensaje));
+                            aumProcess(Long.valueOf(mensaje));
                         }  
                         if (mensaje.equals("Terminado")) {
                             servidor.removerDeArray(asig);
@@ -76,7 +76,7 @@ public class HilosConex extends Thread{
 		}catch(IOException e){}
 	}
         
-        public void aumProcess(int sumando){
+        public void aumProcess(long sumando){
             vel=sumando;
             servidor.getLabelProcesados().setText((Long.valueOf(servidor.getLabelProcesados().getText())+sumando)+"");
             servidor.getLabelRestantes().setText((Long.valueOf(servidor.getLabelRestantes().getText())-(Long.valueOf(servidor.getLabelProcesados().getText())))+"");

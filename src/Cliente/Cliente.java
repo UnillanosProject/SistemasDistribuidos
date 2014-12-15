@@ -34,7 +34,7 @@ public class Cliente extends javax.swing.JFrame {
     private HiloConex hiloConex;
     private HiloLabel hiloLabel;
     private int inI,inJ;
-    private int processAnt,processNew;
+    private long processAnt,processNew;
     private boolean Inicio;
     
     public Cliente() {
@@ -146,7 +146,7 @@ public class HiloProcess extends Thread{
     
 }
 
-    public void setProcesados(int procesados, String actual){
+    public void setProcesados(long procesados, String actual){
         labelProcesados.setText(""+procesados);
         labelActual.setText(""+actual);
 //        labelProcesados.setText(""+procesados+", "+actual);
@@ -170,7 +170,7 @@ public class HiloLabel extends Thread{
         try {
             out.writeUTF("Procesando");
             processAnt=processNew;
-            processNew=Integer.valueOf(cliente.labelProcesados.getText());
+            processNew=Long.valueOf(cliente.labelProcesados.getText());
             out.writeUTF((processNew-processAnt)+"");
         } catch (IOException ex) {
         }

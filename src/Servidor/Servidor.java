@@ -116,7 +116,7 @@ public class Velocidad extends Thread{
         while(true){
             try {
 
-                int vel=0;
+                long vel=0;
                 for (int i = 0; i < hilosConex.size(); i++) {
                     vel=vel+hilosConex.get(i).vel;
                 }
