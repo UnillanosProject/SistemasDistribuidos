@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -71,11 +73,13 @@ public class HiloSocket extends Thread{
         
     Servidor servidor;
     int puerto;
+    Velocidad velocidad;
     ArrayList<HilosConex> hilosConex;
         public HiloSocket(Servidor servidor) {
             this.servidor = servidor;
             puerto=9999;
             hilosConex=new ArrayList<>();
+            velocidad=new Velocidad();
         }
         
         @Override
@@ -84,9 +88,10 @@ public class HiloSocket extends Thread{
 		System.out.println("Esperando conexiones");
 		try{
 			socketServ = new ServerSocket(puerto);
+                        velocidad.start();
 			while(true){
 				Socket socket;
-				socket = socketServ.accept();
+				socket = socketServ.accept();                               
                                 labelConectados.setText(""+(Integer.valueOf(labelConectados.getText())+1));
 				HilosConex.numCliente++;
 //				System.out.println("Se conectó cliente "+HilosConex.numCliente);
@@ -105,6 +110,25 @@ public class HiloSocket extends Thread{
             JOptionPane.showMessageDialog(servidor, "La clave es: "+clave, "Se ha encontrado la clave", JOptionPane.INFORMATION_MESSAGE);
         }
 
+public class Velocidad extends Thread{
+    @Override
+    public void run(){
+        while(true){
+            try {
+
+                int vel=0;
+                for (int i = 0; i < hilosConex.size(); i++) {
+                    vel=vel+hilosConex.get(i).vel;
+                }
+                vel=vel*2;
+                servidor.labelVelocidad.setText(vel+" / segundo");
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+            }
+        }
+    }
+}        
+        
 }
 
     public HiloSocket getHiloSocket() {
@@ -143,7 +167,7 @@ public class HiloSocket extends Thread{
         jLabel5 = new javax.swing.JLabel();
         labelProcesados = new javax.swing.JLabel();
         labelRestantes = new javax.swing.JLabel();
-        labelRestantes1 = new javax.swing.JLabel();
+        labelVelocidad = new javax.swing.JLabel();
         panelGraficos = new javax.swing.JPanel();
         selector1 = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
@@ -258,7 +282,7 @@ public class HiloSocket extends Thread{
         jLabel4.setText("Restantes:");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Promedio:");
+        jLabel5.setText("Velocidad:");
 
         labelProcesados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelProcesados.setText("0");
@@ -268,9 +292,9 @@ public class HiloSocket extends Thread{
         labelRestantes.setText("2565726409");
         labelRestantes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        labelRestantes1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelRestantes1.setText("9999 / segundo");
-        labelRestantes1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        labelVelocidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelVelocidad.setText("0 / segundo");
+        labelVelocidad.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -288,7 +312,7 @@ public class HiloSocket extends Thread{
                 .addGap(35, 35, 35)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelRestantes1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -301,7 +325,7 @@ public class HiloSocket extends Thread{
                     .addComponent(jLabel5)
                     .addComponent(labelProcesados)
                     .addComponent(labelRestantes)
-                    .addComponent(labelRestantes1))
+                    .addComponent(labelVelocidad))
                 .addContainerGap())
         );
 
@@ -411,7 +435,7 @@ public class HiloSocket extends Thread{
     private javax.swing.JLabel labelConectados;
     private javax.swing.JLabel labelProcesados;
     private javax.swing.JLabel labelRestantes;
-    private javax.swing.JLabel labelRestantes1;
+    private javax.swing.JLabel labelVelocidad;
     private javax.swing.JPanel panelGraficos;
     private javax.swing.JComboBox selector1;
     private javax.swing.JComboBox selector2;

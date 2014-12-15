@@ -16,6 +16,7 @@ public class HilosConex extends Thread{
         private Asignacion asig;
         private Servidor servidor;
         private Contador contador;
+        int vel;
 	
 	public HilosConex(Servidor servidor,Socket socketAlt, int nC, String claveAux,Asignacion asig){
 		this.servidor=servidor;
@@ -33,13 +34,14 @@ public class HilosConex extends Thread{
         @Override
 	public void run(){
 		String mensaje="";
+                System.out.println(socketAlt.getInetAddress()+" Conectado...");
 		try{
                     while(!mensaje.equals("fin")){
                         contador=new Contador();
                         contador.start();
                         mensaje = in.readUTF();
                         contador.stop();
-                        System.out.println("Cliente ["+numCliente+"] dice: ["+mensaje+"]");
+                        //System.out.println("Cliente ["+numCliente+"] dice: ["+mensaje+"]");
                         if (mensaje.equals("Esperando clave")) {
                             out.writeUTF(clave);
                             out.writeUTF("Iniciar");
@@ -67,14 +69,15 @@ public class HilosConex extends Thread{
 //                        out.writeUTF(clave);
                         
                     }
-                    System.out.println("Cliente ["+numCliente+"] se Desconecto!!");
+                    //System.out.println("Cliente ["+numCliente+"] se Desconecto!!");
                     numCliente--;
-                    System.out.println("Clientes "+numCliente);
+                    //System.out.println("Clientes "+numCliente);
                     socketAlt.close();
 		}catch(IOException e){}
 	}
         
         public void aumProcess(int sumando){
+            vel=sumando;
             servidor.getLabelProcesados().setText((Long.valueOf(servidor.getLabelProcesados().getText())+sumando)+"");
             servidor.getLabelRestantes().setText((Long.valueOf(servidor.getLabelRestantes().getText())-(Long.valueOf(servidor.getLabelProcesados().getText())))+"");
         }
@@ -94,16 +97,17 @@ public class Contador extends Thread{
     int tiempo=0;
     @Override
     public void run(){
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 30; i++) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch (InterruptedException ex) {
             }
             tiempo=tiempo+100;
             //System.out.println(tiempo);
         }
         if (tiempo>=3000) {
-            System.out.println("Cliente murió");
+            System.out.println(socketAlt.getInetAddress()+" Desconectado...");
+            vel=0;
             asig.setAsignado(false);
             servidor.disminuirConectados();
         }

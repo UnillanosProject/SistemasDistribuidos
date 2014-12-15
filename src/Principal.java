@@ -109,8 +109,8 @@ public class Principal extends javax.swing.JFrame {
     private void servidorBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servidorBotonActionPerformed
         servidor=new Servidor();
         servidor.setVisible(true);
-        cliente=new Cliente();
-        cliente.setVisible(true);
+//        cliente=new Cliente();
+//        cliente.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_servidorBotonActionPerformed
 

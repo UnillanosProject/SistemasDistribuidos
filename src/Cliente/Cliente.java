@@ -63,13 +63,13 @@ public class HiloConex extends Thread{
     public void run()
 	{
             String mensajeOut,mensajeIn;
-		System.out.println("Conectandose al Servidor.... Abriendo Puerto "+numPuerto);
+		//System.out.println(b.getInetAddress()+" Conectado...");
 		try {
 //			dirIP=JOptionPane.showInputDialog("Digite la IP del Servidor:");
 			Socket b = new Socket(dirIP,numPuerto);
                         estado.setForeground(Color.BLUE);
 			estado.setText("Conectado");
-			
+			//System.out.println(b.getInetAddress()+" Conectado...");
                         in = new DataInputStream(b.getInputStream());
 			out = new DataOutputStream(b.getOutputStream());
                         out.writeUTF("Esperando clave");
@@ -79,10 +79,10 @@ public class HiloConex extends Thread{
                         
 			do{
 				mensajeIn = in.readUTF();
-				System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
+				//System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
                                 if (mensajeIn.equals("Iniciar")) {
                                     mensajeIn = in.readUTF();
-                                    System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
+                                    //System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
                                     String[] asignados=mensajeIn.split(",");
                                     inI=Integer.valueOf(asignados[0]);
                                     inJ=Integer.valueOf(asignados[1]);
@@ -101,7 +101,7 @@ public class HiloConex extends Thread{
 //				System.out.println("Clave: "+mensajeOut);
 			}while(!mensajeIn.equals("Finalizar"));
                         
-			 System.out.println("Procesamiento Finalizado");
+			 //System.out.println("Procesamiento Finalizado");
                          JOptionPane.showMessageDialog(cliente, "La clave se ha encontrado", "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
                          hiloProcess.stop();
                          hiloLabel.stop();
@@ -130,7 +130,7 @@ public class HiloProcess extends Thread{
     
     @Override
     public void run(){
-           System.out.println("Asignados: "+inI+","+inJ);
+           //System.out.println("Asignados: "+inI+","+inJ);
            md5.recorrer(inI,inJ);
             try {
 //                cliente.setTerminado(true);
