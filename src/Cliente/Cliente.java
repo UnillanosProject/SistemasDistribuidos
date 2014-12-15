@@ -87,8 +87,9 @@ public class HiloConex extends Thread{
                                     String[] asignados=mensajeIn.split(",");
                                     inI=Integer.valueOf(asignados[0]);
                                     inJ=Integer.valueOf(asignados[1]);
-                                    hiloLabel.setOut(out);
                                     if(Inicio){
+                                        hiloLabel=new HiloLabel(cliente);
+                                        hiloLabel.setOut(out);
                                         hiloLabel.start();
                                     }
                                     Inicio = false;
@@ -412,6 +413,7 @@ public class HiloLabel extends Thread{
             return;
         }
         dirIP=ipServidor.getText();
+        hiloConex=new HiloConex(this);  
         hiloConex.start();
     }//GEN-LAST:event_botonConectarActionPerformed
 
@@ -422,10 +424,10 @@ public class HiloLabel extends Thread{
         }
         estado.setForeground(Color.RED);
         estado.setText("Desconectado");
-        try {
-            hiloConex.out.writeUTF("fin");
-        } catch (IOException ex) {
-        }
+        hiloConex.stop();
+        hiloLabel.stop();
+        hiloProcess.stop();
+        Inicio=true;
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
