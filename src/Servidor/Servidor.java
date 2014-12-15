@@ -292,8 +292,9 @@ public class Velocidad extends Thread{
         jLabel6.setText("Clave");
 
         labelClave.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
-        labelClave.setForeground(new java.awt.Color(8, 27, 91));
+        labelClave.setForeground(new java.awt.Color(53, 155, 35));
         labelClave.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelClave.setText("edison");
         labelClave.setToolTipText("");
         labelClave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(1, 1, 1)));
 
