@@ -36,6 +36,7 @@ public class Cliente extends javax.swing.JFrame {
     private int inI,inJ;
     private long processAnt,processNew;
     private boolean Inicio;
+    private Contador contador; 
     
     public Cliente() {
         initComponents();
@@ -66,7 +67,10 @@ public class HiloConex extends Thread{
 		//System.out.println(b.getInetAddress()+" Conectado...");
 		try {
 //			dirIP=JOptionPane.showInputDialog("Digite la IP del Servidor:");
+                        contador=new Contador(cliente);
+                        contador.start();
 			Socket b = new Socket(dirIP,numPuerto);
+                        contador.stop();
                         estado.setForeground(Color.BLUE);
 			estado.setText("Conectado");
 			//System.out.println(b.getInetAddress()+" Conectado...");
@@ -105,7 +109,7 @@ public class HiloConex extends Thread{
                          JOptionPane.showMessageDialog(cliente, "La clave se ha encontrado", "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
                          hiloProcess.stop();
                          hiloLabel.stop();
-		} catch (HeadlessException | IOException e) {	}
+		} catch (Exception e) {	}
 		
 	}
     
@@ -186,7 +190,31 @@ public class HiloLabel extends Thread{
         }
     
 }
+public class Contador extends Thread{
+    int tiempo=0;
+    Cliente cliente;
 
+        public Contador(Cliente cliente) {
+            this.cliente = cliente;
+        }
+    
+    @Override
+    public void run(){
+        for (int i = 0; i < 6; i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+            }
+            tiempo=tiempo+1000;
+            //System.out.println(tiempo);
+        }
+        if (tiempo>=5000) {
+            hiloConex.stop();
+            hiloConex=new HiloConex(cliente);
+            JOptionPane.showMessageDialog(cliente, "No se ha podido conectar al servidor", "Error de conexión", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
