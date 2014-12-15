@@ -15,6 +15,7 @@ public class HilosConex extends Thread{
         static String clave;
         private Asignacion asig;
         private Servidor servidor;
+        private Contador contador;
 	
 	public HilosConex(Servidor servidor,Socket socketAlt, int nC, String claveAux,Asignacion asig){
 		this.servidor=servidor;
@@ -22,6 +23,7 @@ public class HilosConex extends Thread{
 		numCliente = nC;
                 clave=claveAux;
                 this.asig=asig;
+                contador=new Contador();
 		try{
 			in = new DataInputStream(socketAlt.getInputStream());
 			out = new DataOutputStream(socketAlt.getOutputStream());
@@ -33,7 +35,10 @@ public class HilosConex extends Thread{
 		String mensaje="";
 		try{
                     while(!mensaje.equals("fin")){
+                        contador=new Contador();
+                        contador.start();
                         mensaje = in.readUTF();
+                        contador.stop();
                         System.out.println("Cliente ["+numCliente+"] dice: ["+mensaje+"]");
                         if (mensaje.equals("Esperando clave")) {
                             out.writeUTF(clave);
@@ -41,6 +46,10 @@ public class HilosConex extends Thread{
                             asig.setAsignado(true);
                             out.writeUTF(asig.getInI()+","+asig.getInJ());
                         }
+                        if(mensaje.equals("Procesando")){
+                            mensaje = in.readUTF();
+                            aumProcess(Integer.valueOf(mensaje));
+                        }  
                         if (mensaje.equals("Terminado")) {
                             servidor.removerDeArray(asig);
                             asig=servidor.asignar();
@@ -65,6 +74,11 @@ public class HilosConex extends Thread{
 		}catch(IOException e){}
 	}
         
+        public void aumProcess(int sumando){
+            servidor.getLabelProcesados().setText((Long.valueOf(servidor.getLabelProcesados().getText())+sumando)+"");
+            servidor.getLabelRestantes().setText((Long.valueOf(servidor.getLabelRestantes().getText())-(Long.valueOf(servidor.getLabelProcesados().getText())))+"");
+        }
+        
         public void finalizar(){
             try {
                 out.writeUTF("Finalizar");
@@ -75,4 +89,22 @@ public class HilosConex extends Thread{
             } catch (IOException ex) {
             }
         }
+
+public class Contador extends Thread{
+    int tiempo=0;
+    @Override
+    public void run(){
+        for (int i = 0; i < 30; i++) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+            }
+            tiempo=tiempo+100;
+            System.out.println(tiempo);
+        }
+        if (tiempo>=3000) {
+            System.out.println("Cliente murió");
+        }
+    }
+}
 }

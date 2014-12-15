@@ -32,7 +32,10 @@ public class Cliente extends javax.swing.JFrame {
     private Md5 md5;
     private HiloProcess hiloProcess;
     private HiloConex hiloConex;
+    private HiloLabel hiloLabel;
     private int inI,inJ;
+    private int processAnt,processNew;
+    private boolean Inicio;
     
     public Cliente() {
         initComponents();
@@ -40,6 +43,8 @@ public class Cliente extends javax.swing.JFrame {
         numPuerto=9999;
         md5=new Md5(this);
         hiloConex=new HiloConex(this);
+        processNew=0;
+        Inicio = true;
 //        hiloProcess=new HiloProcess(this);
     }
 
@@ -50,6 +55,7 @@ public class HiloConex extends Thread{
     DataOutputStream out;
         public HiloConex(Cliente cliente) {
             this.cliente = cliente;
+            hiloLabel = new HiloLabel(cliente);
         }
     
 
@@ -80,7 +86,11 @@ public class HiloConex extends Thread{
                                     String[] asignados=mensajeIn.split(",");
                                     inI=Integer.valueOf(asignados[0]);
                                     inJ=Integer.valueOf(asignados[1]);
-                                    out.writeUTF("Procesando");
+                                    hiloLabel.setOut(out);
+                                    if(Inicio){
+                                        hiloLabel.start();
+                                    }
+                                    Inicio = false;
                                     hiloProcess=new HiloProcess(cliente);
                                     hiloProcess.setOut(out);
                                     hiloProcess.start();
@@ -94,6 +104,7 @@ public class HiloConex extends Thread{
 			 System.out.println("Procesamiento Finalizado");
                          JOptionPane.showMessageDialog(cliente, "La clave se ha encontrado", "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
                          hiloProcess.stop();
+                         hiloLabel.stop();
 		} catch (HeadlessException | IOException e) {	}
 		
 	}
@@ -136,7 +147,8 @@ public class HiloProcess extends Thread{
 }
 
     public void setProcesados(int procesados, String actual){
-        labelProcesados.setText(""+procesados+", "+actual);
+        labelProcesados.setText(""+procesados);
+//        labelProcesados.setText(""+procesados+", "+actual);
         labelRestantes.setText(""+(1727604-procesados));
     }
 
@@ -144,6 +156,35 @@ public class HiloProcess extends Thread{
         return hiloConex;
     }
 
+public class HiloLabel extends Thread{
+    DataOutputStream out;
+    Cliente cliente;
+        public HiloLabel(Cliente cliente) {
+            this.cliente=cliente;
+        }
+    
+    @Override
+    public void run(){
+        while(true){
+        try {
+            out.writeUTF("Procesando");
+            processAnt=processNew;
+            processNew=Integer.valueOf(cliente.labelProcesados.getText());
+            out.writeUTF((processNew-processAnt)+"");
+        } catch (IOException ex) {
+        }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+            }
+        }
+    }
+
+        public void setOut(DataOutputStream out) {
+            this.out = out;
+        }
+    
+}
 
     
     /**
@@ -185,6 +226,7 @@ public class HiloProcess extends Thread{
         jLabel4.setText("Restantes Asignados:");
 
         labelProcesados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelProcesados.setText("0");
         labelProcesados.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelRestantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -336,7 +378,7 @@ public class HiloProcess extends Thread{
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 2, Short.MAX_VALUE)
+                .addGap(0, 1, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );

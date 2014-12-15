@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -105,11 +106,14 @@ public class HiloSocket extends Thread{
     public HiloSocket getHiloSocket() {
         return hiloSocket;
     }
- 
-    public void mostrarClave(String clave){
-        
+
+    public JLabel getLabelProcesados() {
+        return labelProcesados;
     }
      
+    public JLabel getLabelRestantes() {
+        return labelRestantes;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -253,11 +257,11 @@ public class HiloSocket extends Thread{
         jLabel5.setText("Promedio:");
 
         labelProcesados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelProcesados.setText("99999999");
+        labelProcesados.setText("0");
         labelProcesados.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelRestantes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelRestantes.setText("99999999");
+        labelRestantes.setText("2565726409");
         labelRestantes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelRestantes1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
