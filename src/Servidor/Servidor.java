@@ -404,21 +404,24 @@ public class Velocidad extends Thread{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(jButton1.getText().equals("Descifrar")){
-            String Key = JOptionPane.showInputDialog(this, "Ingrese clave a cifrar", "Clave", JOptionPane.INFORMATION_MESSAGE);
-            GeneradorMD5 obj=new GeneradorMD5();
-            String clave = obj.md5(Key);
-            campoMd5.setText(clave);
-            jButton1.setText("Cancelar");
-        }
-        if(jButton1.getText().equals("Cancelar")){
-            
-        }
+        String Key = JOptionPane.showInputDialog(this, "Ingrese clave a cifrar", "Clave", JOptionPane.INFORMATION_MESSAGE);
+        GeneradorMD5 obj=new GeneradorMD5();
+        String clave = obj.md5(Key);
+        campoMd5.setText(clave);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botonDescifrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDescifrarActionPerformed
-        md5.setClaveMd5(campoMd5.getText());
-        hiloSocket.start();
+        if(botonDescifrar.getText().equals("Descifrar")){
+            md5.setClaveMd5(campoMd5.getText());
+            hiloSocket.start();
+            botonDescifrar.setText("Cancelar");
+            return;
+        }
+        if(botonDescifrar.getText().equals("Cancelar")){
+            hiloSocket.stop();
+            botonDescifrar.setText("Descifrar");
+            return;
+        }
     }//GEN-LAST:event_botonDescifrarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
