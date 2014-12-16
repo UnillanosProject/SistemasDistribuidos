@@ -8,8 +8,6 @@ public class InfoSistema {
             new InfoSO().imprimirInfo();
             System.out.println("\n==== Informacion de la CPU ====");
             new InfoCPU().imprimirInfoCPU();
-            System.out.println("\n====Informacion del sistema de archivos====");
-            new InfoSistemaArchivos().imprimirInfo();
             System.out.println("\n====Informacion de la memoria====");
             new InfoMemoria().imprimirInfo();
         } catch (SigarException e) {
