@@ -1,4 +1,4 @@
-package JFreeChart;
+package Graficas;
 
 import java.awt.*;
 import javax.swing.*;
@@ -117,5 +117,11 @@ public class DialDemo2 extends JFrame{
         public static JPanel createDemoPanel(){
             return new DemoPanel();
         }
+        public static void main(String args[])
+	{
+		DialDemo2 dialdemo2 = new DialDemo2("JFreeChart - Demo Dial 2");
+		dialdemo2.pack();
+		dialdemo2.setVisible(true);
+	}
 }
 

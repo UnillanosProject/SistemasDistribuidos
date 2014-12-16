@@ -1,4 +1,4 @@
-package JFreeChart;
+package Graficas;
 
 import java.awt.Color;
 

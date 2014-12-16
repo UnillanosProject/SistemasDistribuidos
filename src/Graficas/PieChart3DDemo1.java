@@ -1,4 +1,4 @@
-package JFreeChart;
+package Graficas;
 import java.awt.Color;
 
 import org.jfree.chart.ChartFactory;
@@ -76,9 +76,9 @@ public class PieChart3DDemo1 extends ApplicationFrame {
         plot.setSectionPaint("One", Color.BLACK);
         plot.setSectionPaint("Two", Color.WHITE);
         
-        plot.setBackgroundPaint(Color.YELLOW);
+        plot.setBackgroundPaint(Color.WHITE);
         
-        plot.setOutlinePaint(Color.RED);
+        plot.setOutlinePaint(Color.BLACK);
         
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0}--{1}--{2}"));
         
@@ -86,9 +86,9 @@ public class PieChart3DDemo1 extends ApplicationFrame {
         
         chart.setBorderVisible(false);
         
-        chart.setBorderPaint(Color.RED);
+        chart.setBorderPaint(Color.BLACK);
         
-        chart.setBackgroundPaint(Color.YELLOW);
+        chart.setBackgroundPaint(Color.WHITE);
         
         
         

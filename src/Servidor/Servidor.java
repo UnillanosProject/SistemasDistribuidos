@@ -6,6 +6,7 @@
 
 package Servidor;
 
+import Graficas.PanelGraficaPrincipal;
 import MD5.GeneradorMD5;
 import MD5.Md5;
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class Servidor extends javax.swing.JFrame {
         hiloSocket=new HiloSocket(this);
         md5=new Md5();
         asignaciones=asignaciones();
+        panelGraficoPrincipal.add(new PanelGraficaPrincipal());
     }
     
     public void disminuirConectados(){
