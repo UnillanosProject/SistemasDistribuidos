@@ -1,3 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package Servidor;
 
 import MD5.GeneradorMD5;
@@ -10,25 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.plot.dial.*;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.general.DefaultValueDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.GradientPaintTransformType;
-import org.jfree.ui.StandardGradientPaintTransformer;
 /**
  *
  * @author Arango Abello
@@ -48,7 +36,7 @@ public class Servidor extends javax.swing.JFrame {
         hiloSocket=new HiloSocket(this);
         md5=new Md5();
         asignaciones=asignaciones();
-//        panelGraficoPrincipal.add(new PanelGraficaPrincipal());
+        panelGraficoPrincipal.add(new PanelGraficaPrincipal());
     }
     
     public void disminuirConectados(){
@@ -174,6 +162,9 @@ public class Velocidad extends Thread{
         campoMd5 = new javax.swing.JTextField();
         botonDescifrar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        labelConectados = new javax.swing.JLabel();
+        panelGraficoPrincipal = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -187,12 +178,6 @@ public class Velocidad extends Thread{
         selector1 = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
         selector2 = new javax.swing.JComboBox();
-        graficoPequeño2 = new Servidor.GraficoPequeño();
-        graficoPequeño1 = new Servidor.GraficoPequeño();
-        jPanel1 = new javax.swing.JPanel();
-        labelConectados = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        graficaPrincipal1 = new Servidor.GraficaPrincipal();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MD5 Decrypter - Server");
@@ -217,6 +202,16 @@ public class Velocidad extends Thread{
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Conectados");
+
+        labelConectados.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
+        labelConectados.setForeground(new java.awt.Color(64, 75, 75));
+        labelConectados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelConectados.setText("0");
+        labelConectados.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -227,21 +222,36 @@ public class Velocidad extends Thread{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoMd5, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(campoMd5, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonDescifrar)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelConectados, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoMd5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonDescifrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(labelConectados, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonDescifrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(campoMd5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelGraficoPrincipal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout panelGraficoPrincipalLayout = new javax.swing.GroupLayout(panelGraficoPrincipal);
+        panelGraficoPrincipal.setLayout(panelGraficoPrincipalLayout);
+        panelGraficoPrincipalLayout.setHorizontalGroup(
+            panelGraficoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 353, Short.MAX_VALUE)
+        );
+        panelGraficoPrincipalLayout.setVerticalGroup(
+            panelGraficoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 424, Short.MAX_VALUE)
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -303,17 +313,16 @@ public class Velocidad extends Thread{
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(labelClave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(labelProcesados)
-                            .addComponent(labelRestantes)
-                            .addComponent(labelVelocidad))))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelClave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel5)
+                        .addComponent(labelProcesados)
+                        .addComponent(labelRestantes)
+                        .addComponent(labelVelocidad)
+                        .addComponent(jLabel6)))
                 .addContainerGap())
         );
 
@@ -325,98 +334,49 @@ public class Velocidad extends Thread{
 
         selector2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "192.168.10.106", "Item 2", "Item 3", "Item 4" }));
 
-        graficoPequeño2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        graficoPequeño1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
         javax.swing.GroupLayout panelGraficosLayout = new javax.swing.GroupLayout(panelGraficos);
         panelGraficos.setLayout(panelGraficosLayout);
         panelGraficosLayout.setHorizontalGroup(
             panelGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
-            .addGroup(panelGraficosLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGraficosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(selector1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(selector2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelGraficosLayout.createSequentialGroup()
-                        .addGroup(panelGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(graficoPequeño1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(graficoPequeño2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(panelGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(selector1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(selector2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelGraficosLayout.setVerticalGroup(
             panelGraficosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGraficosLayout.createSequentialGroup()
                 .addComponent(selector1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(graficoPequeño1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
+                .addGap(175, 175, 175)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(selector2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(graficoPequeño2, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                .addGap(7, 7, 7))
-        );
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        labelConectados.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        labelConectados.setForeground(new java.awt.Color(64, 75, 75));
-        labelConectados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelConectados.setText("0");
-        labelConectados.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Conectados:");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelConectados, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(labelConectados, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(graficaPrincipal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(panelGraficos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addComponent(panelGraficoPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(panelGraficos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelGraficos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(graficaPrincipal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelGraficoPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelGraficos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -426,14 +386,8 @@ public class Velocidad extends Thread{
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String Key = JOptionPane.showInputDialog(this, "Ingrese clave a cifrar", "Clave", JOptionPane.INFORMATION_MESSAGE);
         GeneradorMD5 obj=new GeneradorMD5();
-        String clave="";
-        if(Key!=null){
-        clave = obj.md5(Key);
-        }
+        String clave = obj.md5(Key);
         campoMd5.setText(clave);
-        graficoPequeño1.añadirASerie(1, 1);
-        graficoPequeño1.añadirASerie(2, 2);
-        graficoPequeño2.añadirASerie(3, 4);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botonDescifrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDescifrarActionPerformed
@@ -453,9 +407,6 @@ public class Velocidad extends Thread{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonDescifrar;
     private javax.swing.JTextField campoMd5;
-    private Servidor.GraficaPrincipal graficaPrincipal1;
-    private Servidor.GraficoPequeño graficoPequeño1;
-    private Servidor.GraficoPequeño graficoPequeño2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -463,7 +414,6 @@ public class Velocidad extends Thread{
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
@@ -472,258 +422,9 @@ public class Velocidad extends Thread{
     private javax.swing.JLabel labelProcesados;
     private javax.swing.JLabel labelRestantes;
     private javax.swing.JLabel labelVelocidad;
+    private javax.swing.JPanel panelGraficoPrincipal;
     private javax.swing.JPanel panelGraficos;
     private javax.swing.JComboBox selector1;
     private javax.swing.JComboBox selector2;
     // End of variables declaration//GEN-END:variables
-
-
-static class GraficaPrincipal extends JPanel
-//                implements ChangeListener
-        {
-
-                DefaultValueDataset dataset1;
-                DefaultValueDataset dataset2;
-//                JSlider slider1;
-//                JSlider slider2;
-
-//                public void stateChanged(ChangeEvent changeevent)
-//                {
-//                        dataset1.setValue(new Integer(slider1.getValue()));
-//                        dataset2.setValue(new Integer(slider2.getValue()));
-//                }
-
-                public GraficaPrincipal()
-                {
-                        super(new BorderLayout());
-                        setBorder(javax.swing.BorderFactory.createEtchedBorder());
-                        dataset1 = new DefaultValueDataset(0D);
-                        dataset2 = new DefaultValueDataset(0D);
-                        
-                        DialPlot dialplot = new DialPlot();
-                        
-                        dialplot.setView(0.0D, 0.0D, 1.0D, 1.0D);
-                        dialplot.setDataset(0, dataset1);
-                        dialplot.setDataset(1, dataset2);
-                        
-                        StandardDialFrame standarddialframe = new StandardDialFrame();
-                        standarddialframe.setBackgroundPaint(Color.lightGray);
-                        standarddialframe.setForegroundPaint(Color.darkGray);
-                        dialplot.setDialFrame(standarddialframe);
-                        
-                        GradientPaint gradientpaint = new GradientPaint(new Point(), new Color(255, 255, 255), new Point(), new Color(170, 170, 220));
-                        DialBackground dialbackground = new DialBackground(gradientpaint);
-                        
-                        dialbackground.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.VERTICAL));
-                        dialplot.setBackground(dialbackground);
-                        
-                        DialTextAnnotation dialtextannotation = new DialTextAnnotation("CPU");
-                        dialtextannotation.setFont(new Font("Dialog", 1, 14));
-                        dialtextannotation.setRadius(0.69999999999999996D);
-                        dialplot.addLayer(dialtextannotation);
-                        
-                        DialValueIndicator dialvalueindicator = new DialValueIndicator(0);
-                        dialvalueindicator.setFont(new Font("Dialog", 0, 10));
-                        dialvalueindicator.setOutlinePaint(Color.darkGray);
-                        dialvalueindicator.setRadius(0.59999999999999998D);
-                        dialvalueindicator.setAngle(-103D);
-                        dialplot.addLayer(dialvalueindicator);
-                        
-                        DialValueIndicator dialvalueindicator1 = new DialValueIndicator(1);
-                        dialvalueindicator1.setFont(new Font("Dialog", 0, 10));
-                        dialvalueindicator1.setOutlinePaint(Color.red);
-                        dialvalueindicator1.setRadius(0.59999999999999998D);
-                        dialvalueindicator1.setAngle(-77D);
-                        dialplot.addLayer(dialvalueindicator1);
-                        
-                        StandardDialScale standarddialscale = new StandardDialScale(0D, 100D, -120D, -300D, 10D, 4);
-                        standarddialscale.setTickRadius(0.88D);
-                        standarddialscale.setTickLabelOffset(0.14999999999999999D);
-                        standarddialscale.setTickLabelFont(new Font("Dialog", 0, 14));
-                        dialplot.addScale(0, standarddialscale);
-                        
-                        StandardDialScale standarddialscale1 = new StandardDialScale(0.0D, 100D, -120D, -300D, 10D, 4);
-                        standarddialscale1.setTickRadius(0.5D);
-                        standarddialscale1.setTickLabelOffset(0.14999999999999999D);
-                        standarddialscale1.setTickLabelFont(new Font("Dialog", 0, 10));
-                        standarddialscale1.setMajorTickPaint(Color.red);
-                        standarddialscale1.setMinorTickPaint(Color.red);
-                        dialplot.addScale(1, standarddialscale1);
-                        
-                        dialplot.mapDatasetToScale(1, 1);
-                        
-                        StandardDialRange standarddialrange = new StandardDialRange(90D, 100D, Color.blue);
-                        standarddialrange.setScaleIndex(1);
-                        standarddialrange.setInnerRadius(0.58999999999999997D);
-                        standarddialrange.setOuterRadius(0.58999999999999997D);
-                        dialplot.addLayer(standarddialrange);
-                        
-                        org.jfree.chart.plot.dial.DialPointer.Pin pin = new org.jfree.chart.plot.dial.DialPointer.Pin(1);
-                        pin.setRadius(0.55000000000000004D);
-                        dialplot.addPointer(pin);
-                        
-                        org.jfree.chart.plot.dial.DialPointer.Pointer pointer = new org.jfree.chart.plot.dial.DialPointer.Pointer(0);
-                        dialplot.addPointer(pointer);
-                        
-                        DialCap dialcap = new DialCap();
-                        dialcap.setRadius(0.10000000000000001D);
-                        dialplot.setCap(dialcap);
-                        
-                        //ChartFactory.create
-                        
-                        JFreeChart jfreechart = new JFreeChart(dialplot);
-                        jfreechart.setTitle("CPU & Memory");
-                        ChartPanel chartpanel = new ChartPanel(jfreechart);
-                        chartpanel.setPreferredSize(new Dimension(400, 400));
-                        JPanel jpanel = new JPanel(new GridLayout(2, 2));
-                        add(chartpanel);
-                        add(jpanel, "South");
-                }
-        }
-
-static class GraficoPequeño extends JPanel {
-
-    XYSeries series1;
-public GraficoPequeño() {
-
-//        super(title);
-
-        final XYDataset dataset = createDataset();
-        final JFreeChart chart = createChart(dataset);
-        final ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(240, 170));
-//        setContentPane(chartPanel);
-        add(chartPanel);
-    }
-    
-
-    public void añadirASerie(double y,double x){
-        series1.add(y ,x );
-    }
-
-    /**
-     * Creates a sample dataset.
-     * 
-     * @return a sample dataset.
-     */
-    private XYDataset createDataset() {
-        
-        series1 = new XYSeries("");
-//        series1.add(1.0, 1.0);
-//        series1.add(2.0, 4.0);
-//        series1.add(3.0, 3.0);
-//        series1.add(4.0, 5.0);
-//        series1.add(5.0, 5.0);
-//        series1.add(6.0, 7.0);
-//        series1.add(7.0, 7.0);
-//        series1.add(8.0, 8.0);
-
-//        final XYSeries series2 = new XYSeries("Memoria");
-//        series2.add(1.0, 5.0);
-//        series2.add(2.0, 7.0);
-//        series2.add(3.0, 6.0);
-//        series2.add(4.0, 8.0);
-//        series2.add(5.0, 4.0);
-//        series2.add(6.0, 4.0);
-//        series2.add(7.0, 2.0);
-//        series2.add(8.0, 1.0);
-
-        final XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series1);
-//        dataset.addSeries(series3);
-                
-        return dataset;
-        
-    }
-    
-    /**
-     * Creates a chart.
-     * 
-     * @param dataset  the data for the chart.
-     * 
-     * @return a chart.
-     */
-    private JFreeChart createChart(final XYDataset dataset) {
-        
-        // create the chart...
-        final JFreeChart chart = ChartFactory.createXYLineChart(
-            "",      // chart title
-            "Tiempo",                      // x axis label
-            "GHz/GB",                      // y axis label
-            dataset,                  // data
-            PlotOrientation.VERTICAL,
-            true,                     // include legend
-            true,                     // tooltips
-            true                     // urls
-        );
-
-        // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
-        chart.setBackgroundPaint(Color.white);
-
-//        final StandardLegend legend = (StandardLegend) chart.getLegend();
-  //      legend.setDisplaySeriesShapes(true);
-        
-        // get a reference to the plot for further customisation...
-        final XYPlot plot = chart.getXYPlot();
-        plot.setBackgroundPaint(Color.lightGray);
-    //    plot.setAxisOffset(new Spacer(Spacer.ABSOLUTE, 5.0, 5.0, 5.0, 5.0));
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
-        
-        
-        final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        //renderer.setSeriesLinesVisible(0, false);
-        //renderer.setSeriesShapesVisible(1, false);
-        plot.setRenderer(renderer);
-
-        // change the auto tick unit selection to integer units only...
-        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        // OPTIONAL CUSTOMISATION COMPLETED.
-                
-        return chart;
-        
-    }
-}
-
-public class GraficoPequeño2 extends JPanel
-	{
-
-		JSlider slider;
-		DefaultValueDataset dataset;
-
-		public GraficoPequeño2()
-		{
-			super(new BorderLayout());
-			dataset = new DefaultValueDataset(50D);
-			DialPlot dialplot = new DialPlot();
-			dialplot.setView(0.20999999999999999D, 0.0D, 0.57999999999999996D, 0.29999999999999999D);
-			dialplot.setDataset(dataset);
-			ArcDialFrame arcdialframe = new ArcDialFrame(60D, 60D);
-			arcdialframe.setInnerRadius(0.59999999999999998D);
-			arcdialframe.setOuterRadius(0.90000000000000002D);
-			arcdialframe.setForegroundPaint(Color.darkGray);
-			arcdialframe.setStroke(new BasicStroke(3F));
-			dialplot.setDialFrame(arcdialframe);
-			GradientPaint gradientpaint = new GradientPaint(new Point(), new Color(255, 255, 255), new Point(), new Color(240, 240, 240));
-			DialBackground dialbackground = new DialBackground(gradientpaint);
-			dialbackground.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.VERTICAL));
-			dialplot.addLayer(dialbackground);
-			StandardDialScale standarddialscale = new StandardDialScale(0, 100, 115D, -50D, 10, 4);
-			standarddialscale.setTickRadius(0.88D);
-			standarddialscale.setTickLabelOffset(0.070000000000000007D);
-			standarddialscale.setMajorTickIncrement(25D);
-			dialplot.addScale(0, standarddialscale);
-			org.jfree.chart.plot.dial.DialPointer.Pin pin = new org.jfree.chart.plot.dial.DialPointer.Pin();
-			pin.setRadius(0.81999999999999995D);
-			dialplot.addLayer(pin);
-			JFreeChart jfreechart = new JFreeChart(dialplot);
-			jfreechart.setTitle("Porcentaje uso CPU");
-			ChartPanel chartpanel = new ChartPanel(jfreechart);
-			chartpanel.setPreferredSize(new Dimension(240, 150));
-                        add(chartpanel);
-		}
-	
-}
-
 }
