@@ -178,7 +178,8 @@ public class Velocidad extends Thread{
                         graficoPequeño2.tiempoActual=graficoPequeño2.tiempoActual+0.5;
                         graficoPequeño2.añadirASerie(graficoPequeño2.tiempoActual,Double.parseDouble(hilosConex.get(q).RAMactual)/1024);
                     }
-                    cpuTotal+=Double.parseDouble(hilosConex.get(q).CPUactual);
+//                    System.out.println(Double.parseDouble(hilosConex.get(q).CPUactual)*(hilosConex.get(q).cpuTotal/1000)/100);
+                    cpuTotal+=Double.parseDouble(hilosConex.get(q).CPUactual)*(hilosConex.get(q).cpuTotal/1000)/100;
                     ramTotal+=Double.parseDouble(hilosConex.get(q).RAMactual);
                 }
                 graficaPrincipal1.setValorCPU(cpuTotal);
