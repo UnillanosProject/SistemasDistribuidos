@@ -125,7 +125,7 @@ public class Contador extends Thread{
             //System.out.println(tiempo);
         }
         if (tiempo>=3000) {
-            System.out.println(socketAlt.getInetAddress()+" Desconectado...");
+            System.out.println(ip+" Desconectado...");
             vel=0;
             asig.setAsignado(false);
             servidor.disminuirConectados();

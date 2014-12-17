@@ -105,12 +105,14 @@ public class HiloSocket extends Thread{
             while(true){
                 Socket socket;
                 socket = socketServ.accept();                               
-                                labelConectados.setText(""+(Integer.valueOf(labelConectados.getText())+1));
+                labelConectados.setText(""+(Integer.valueOf(labelConectados.getText())+1));
                 HilosConex.numCliente++;
 //              System.out.println("Se conectó cliente "+HilosConex.numCliente);
                 HilosConex hilo=new HilosConex(servidor,socket,HilosConex.numCliente,md5.getClaveMd5(),asignar());
                                 hilo.start();
                                 hilosConex.add(hilo);
+                 selector1.addItem(hilo.ip);
+                 selector2.addItem(hilo.ip);
             }
         }catch(IOException e){}
         }
@@ -122,6 +124,29 @@ public class HiloSocket extends Thread{
             }  
             labelClave.setText(clave);
             JOptionPane.showMessageDialog(servidor, "La clave es "+clave, "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        public void cambiarGrafico1(String ip) {
+            for (int i = 0; i < hilosConex.size(); i++) {
+                if (hilosConex.get(i).ip.equals(ip)) {
+                    ArrayList<String> CPUs = hilosConex.get(i).CPUs;
+                    for (int j = 0; j < CPUs.size(); j++) {
+                        graficoPequeño1.tiempoActual=graficoPequeño1.tiempoActual+0.5;
+                        graficoPequeño1.añadirASerie(graficoPequeño1.tiempoActual,Double.parseDouble(CPUs.get(j)));
+                    }
+                }
+            }
+        }
+        public void cambiarGrafico2(String ip) {
+            for (int i = 0; i < hilosConex.size(); i++) {
+                if (hilosConex.get(i).ip.equals(ip)) {
+                    ArrayList<String> RAMs = hilosConex.get(i).RAMs;
+                    for (int j = 0; j < RAMs.size(); j++) {
+                        graficoPequeño2.tiempoActual=graficoPequeño2.tiempoActual+0.5;
+                        graficoPequeño2.añadirASerie(graficoPequeño2.tiempoActual,Double.parseDouble(RAMs.get(j)));
+                    }
+                }
+            }
         }
 
 public class Velocidad extends Thread{
@@ -136,6 +161,18 @@ public class Velocidad extends Thread{
                 }
                 vel=vel*2;
                 servidor.labelVelocidad.setText(vel+" / seg");
+                
+                for (int q = 0; q < hilosConex.size(); q++) {
+                    if (hilosConex.get(q).ip.equals(selector1.getSelectedItem().toString())) {
+                        graficoPequeño1.tiempoActual=graficoPequeño1.tiempoActual+0.5;
+                        graficoPequeño1.añadirASerie(graficoPequeño1.tiempoActual,Double.parseDouble(hilosConex.get(q).CPUactual));
+                    }
+                    if (hilosConex.get(q).ip.equals(selector2.getSelectedItem().toString())) {
+                        graficoPequeño2.tiempoActual=graficoPequeño2.tiempoActual+0.5;
+                        graficoPequeño2.añadirASerie(graficoPequeño2.tiempoActual,Double.parseDouble(hilosConex.get(q).RAMactual));
+                    }
+                }
+                
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
             }
@@ -319,11 +356,21 @@ public class Velocidad extends Thread{
 
         panelGraficos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        selector1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "192.168.10.106", "Item 2", "Item 3", "Item 4" }));
+        selector1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "..." }));
+        selector1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                selector1ItemStateChanged(evt);
+            }
+        });
 
         jSeparator1.setForeground(new java.awt.Color(153, 153, 153));
 
-        selector2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "192.168.10.106", "Item 2", "Item 3", "Item 4" }));
+        selector2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "..." }));
+        selector2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                selector2ItemStateChanged(evt);
+            }
+        });
 
         graficoPequeño2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -450,6 +497,18 @@ public class Velocidad extends Thread{
         }
     }//GEN-LAST:event_botonDescifrarActionPerformed
 
+    private void selector1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_selector1ItemStateChanged
+        graficoPequeño1.series1.clear();
+        graficoPequeño1.tiempoActual=0;
+        hiloSocket.cambiarGrafico1(selector1.getSelectedItem().toString());
+    }//GEN-LAST:event_selector1ItemStateChanged
+
+    private void selector2ItemStateChanged(java.awt.event.ItemEvent evt) {                                           
+        graficoPequeño2.series1.clear();
+        graficoPequeño2.tiempoActual=0;
+        hiloSocket.cambiarGrafico2(selector2.getSelectedItem().toString());
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonDescifrar;
     private javax.swing.JTextField campoMd5;
@@ -467,7 +526,6 @@ public class Velocidad extends Thread{
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel labelClave;
     private javax.swing.JLabel labelConectados;
     private javax.swing.JLabel labelProcesados;
@@ -584,6 +642,7 @@ static class GraficaPrincipal extends JPanel
 static class GraficoPequeño extends JPanel {
 
     XYSeries series1;
+    double tiempoActual=0;
 public GraficoPequeño() {
 
 //        super(title);
@@ -597,8 +656,8 @@ public GraficoPequeño() {
     }
     
 
-    public void añadirASerie(double y,double x){
-        series1.add(y ,x );
+    public void añadirASerie(double x,double y){
+        series1.add(x,y);
     }
 
     /**
