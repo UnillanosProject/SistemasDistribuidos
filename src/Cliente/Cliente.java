@@ -130,6 +130,9 @@ public class HiloConex extends Thread{
                         
              //System.out.println("Procesamiento Finalizado");
                          JOptionPane.showMessageDialog(cliente, "La clave se ha encontrado", "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
+                         grafico1.series1.clear();
+                         grafico1.series2.clear();
+                         botonConectar.setText("Conectar");
                          hiloProcess.stop();
                          hiloLabel.stop();
         } catch (Exception e) { }
@@ -578,7 +581,7 @@ static class Grafico extends JPanel {
         final JFreeChart chart = ChartFactory.createXYLineChart(
             "",      // chart title
             "Tiempo",                      // x axis label
-            "GHz/GB",                      // y axis label
+            "GB - GHz",                      // y axis label
             dataset,                  // data
             PlotOrientation.VERTICAL,
             true,                     // include legend
@@ -603,7 +606,8 @@ static class Grafico extends JPanel {
         final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         //renderer.setSeriesLinesVisible(0, false);
         //renderer.setSeriesShapesVisible(1, false);
-        plot.setRenderer(renderer);
+        
+//plot.setRenderer(renderer);
 
         // change the auto tick unit selection to integer units only...
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();

@@ -122,6 +122,7 @@ public class HiloSocket extends Thread{
             }  
             labelClave.setText(clave);
             JOptionPane.showMessageDialog(servidor, "La clave es "+clave, "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
+            botonDescifrar.setText("Descifrar");
         }
 
         public void cambiarGrafico1(String ip) {
@@ -743,7 +744,7 @@ public GraficoPequeño() {
         final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         //renderer.setSeriesLinesVisible(0, false);
         //renderer.setSeriesShapesVisible(1, false);
-        plot.setRenderer(renderer);
+//plot.setRenderer(renderer);
 
         // change the auto tick unit selection to integer units only...
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
