@@ -495,7 +495,7 @@ public class Contador extends Thread{
             }
             grafico1.series1.clear();
             grafico1.series2.clear();
-            ipServidor.setText("");
+//            ipServidor.setText("");
             Inicio=true;
             botonConectar.setText("Conectar");  
             return;

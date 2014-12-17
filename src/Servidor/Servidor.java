@@ -174,8 +174,10 @@ public class Velocidad extends Thread{
                 double cpuTotal=0,ramTotal=0;
                 for (int q = 0; q < hilosConex.size(); q++) {
                     if (hilosConex.get(q).ip.equals(selector1.getSelectedItem().toString())) {
+//                        if (hilosConex.get(q).cpuTotal!=0) {
                         graficoPequeño1.tiempoActual=graficoPequeño1.tiempoActual+0.5;
-                        graficoPequeño1.añadirASerie(graficoPequeño1.tiempoActual,Double.parseDouble(hilosConex.get(q).CPUactual));
+                        graficoPequeño1.añadirASerie(graficoPequeño1.tiempoActual,Double.parseDouble(hilosConex.get(q).CPUactual)*(hilosConex.get(q).cpuTotal/1000)/100);
+//                        }
                     }
                     if (hilosConex.get(q).ip.equals(selector2.getSelectedItem().toString())) {
                         graficoPequeño2.tiempoActual=graficoPequeño2.tiempoActual+0.5;
