@@ -746,7 +746,7 @@ public GraficoPequeño() {
         final JFreeChart chart = ChartFactory.createXYLineChart(
             "",      // chart title
             "Tiempo",                      // x axis label
-            "GHz/GB",                      // y axis label
+            "GHz - GB",                      // y axis label
             dataset,                  // data
             PlotOrientation.VERTICAL,
             true,                     // include legend
