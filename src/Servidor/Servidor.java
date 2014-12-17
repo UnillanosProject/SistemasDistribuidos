@@ -841,7 +841,7 @@ public GraficoPequeño2() {
     
     /**
      * Creates a chart.
-     * 
+     *  
      * @param dataset  the data for the chart.
      * 
      * @return a chart.
