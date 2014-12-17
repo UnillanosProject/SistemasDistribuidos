@@ -22,6 +22,7 @@ public class HilosConex extends Thread{
         public String CPUactual="0";
         public String RAMactual="0";
         public String ip;
+        public double cpuTotal;
         long vel;
     
     public HilosConex(Servidor servidor,Socket socketAlt, int nC, String claveAux,Asignacion asig){
@@ -54,6 +55,8 @@ public class HilosConex extends Thread{
                         contador.stop();
                         //System.out.println("Cliente ["+numCliente+"] dice: ["+mensaje+"]");
                         if (mensaje.equals("Esperando clave")) {
+                            mensaje = in.readUTF();
+                            cpuTotal=Double.parseDouble(mensaje);
                             out.writeUTF(clave);
                             out.writeUTF("Iniciar");
                             asig.setAsignado(true);
