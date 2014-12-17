@@ -1,49 +1,57 @@
 package InfoSistema;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hyperic.sigar.CpuInfo;
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.OperatingSystem;
 import org.hyperic.sigar.Sigar;
-import org.hyperic.sigar.Swap;
 import org.hyperic.sigar.SigarException;
 
 public class InfoSistema {
     private Sigar sigar = new Sigar();
+    public String[] infoSOalt=new String[2];
+    public String[] infoSO=new String[5];
     
-    public void imprimirInfo() throws SigarException {
+    public String[] InfoSOalt() throws SigarException {
+        Mem memoria = sigar.getMem();
+        infoSOalt[0]=CpuPerc.format(sigar.getCpuPerc().getUser()); //Consumo CPUs %
+        infoSOalt[0]=infoSOalt[0].substring(0, infoSOalt[0].length()-1); 
+        infoSOalt[1]=enMegaBytes(memoria.getUsed()).toString(); //Consumo RAM (MB)
+        return infoSOalt;
+    }
+    
+    public String[] InfoSO() throws SigarException {
         CpuInfo[] infos = null;
-        CpuPerc[] cpus = null;
+        Mem memoria = sigar.getMem();
+        OperatingSystem sys = OperatingSystem.getInstance();
         try {
             infos = sigar.getCpuInfoList();
         } catch (SigarException e) {
-            e.printStackTrace();
         }
         CpuInfo info = infos[0];
-        OperatingSystem sys = OperatingSystem.getInstance();
-        System.out.println("Sistema Operativo:\t" + sys.getDescription());
-        System.out.println("Fabricante CPU:\t\t" + info.getVendor()+" "+info.getModel());
-        System.out.println("Mhz\t\t\t" + info.getMhz() + " MHz");
-        System.out.println("Total CPUs:\t\t" + info.getTotalCores());
-        try {
-            System.out.println("Consumo Total CPUs:\t" + CpuPerc.format(sigar.getCpuPerc().getUser()));
-        } catch (SigarException e) {
-            e.printStackTrace();
-        }
-        Mem memoria = sigar.getMem();
-        Swap intercambio = sigar.getSwap();
-        System.out.println("Memoria RAM Total:\t"+enMegaBytes(memoria.getTotal())+" MB");
-        System.out.println("Memoria RAM Usada:\t"+enMegaBytes(memoria.getUsed())+" MB");
-    }
-    private Long enMegaBytes(long valor) {
-        return new Long(valor / (1024*1024));
+        infoSO[0]=sys.getDescription(); //Sistema Operativo
+        infoSO[1]=info.getVendor()+" "+info.getModel(); //Info CPU
+        infoSO[2]=info.getMhz()+""; //Velocidad CPU (MGz)
+        infoSO[3]=info.getTotalCores()+""; //Cantidad CPU
+        infoSO[4]=enMegaBytes(memoria.getTotal())+""; //RAM Total (MB)
+        return infoSO;
     }
     
-    public static void main(String[] args) {
-        try {
-            new InfoSistema().imprimirInfo();
-        } catch (SigarException e) {
-            e.printStackTrace();
-        }
+    private Long enMegaBytes(long valor) {
+        return (valor / (1024*1024));
     }
+//    
+//    public static void main(String[] args) {
+//        InfoSistema info=new InfoSistema();
+//        try {
+//            info.InfoSO();
+//            info.InfoSOalt();
+//        } catch (SigarException ex) {
+//            Logger.getLogger(InfoSistema.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        System.out.println(info.infoSOalt[0]+"\n"+info.infoSOalt[1]);
+//        System.out.println(info.infoSO[0]+"\n"+info.infoSO[1]+"\n"+info.infoSO[2]+"\n"+info.infoSO[3]+"\n"+info.infoSO[4]);
+//    }
 }

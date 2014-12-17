@@ -3,39 +3,48 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public class HilosConex extends Thread{
-	private final Socket socketAlt;
-	private DataInputStream in;
-	private DataOutputStream out;
-	static int numCliente;
+    private final Socket socketAlt;
+    private DataInputStream in;
+    private DataOutputStream out;
+    static int numCliente;
         static String clave;
         private Asignacion asig;
         private Servidor servidor;
         private Contador contador;
+        public ArrayList<String> CPUs;
+        public ArrayList<String> RAMs;
+        public String CPUactual;
+        public String RAMactual;
+        public String ip;
         long vel;
-	
-	public HilosConex(Servidor servidor,Socket socketAlt, int nC, String claveAux,Asignacion asig){
-		this.servidor=servidor;
+    
+    public HilosConex(Servidor servidor,Socket socketAlt, int nC, String claveAux,Asignacion asig){
+        this.servidor=servidor;
                 this.socketAlt = socketAlt;
-		numCliente = nC;
+        numCliente = nC;
                 clave=claveAux;
                 this.asig=asig;
+                CPUs=new ArrayList<>();
+                RAMs=new ArrayList<>();
                 contador=new Contador();
-		try{
-			in = new DataInputStream(socketAlt.getInputStream());
-			out = new DataOutputStream(socketAlt.getOutputStream());
-		}catch(IOException e){}
-	}
-	
+        try{
+            in = new DataInputStream(socketAlt.getInputStream());
+            out = new DataOutputStream(socketAlt.getOutputStream());
+        }catch(IOException e){}
+    }
+    
         @Override
-	public void run(){
-		String mensaje="";
-                System.out.println(socketAlt.getInetAddress()+" Conectado...");
-		try{
+    public void run(){
+        String mensaje="";
+                ip=socketAlt.getInetAddress().toString().substring(1);
+                System.out.println(ip+" Conectado...");
+        try{
                     while(!mensaje.equals("fin")){
                         contador=new Contador();
                         contador.start();
@@ -52,6 +61,11 @@ public class HilosConex extends Thread{
                             mensaje = in.readUTF();
                             aumProcess(Long.valueOf(mensaje));
                         }  
+                        if(mensaje.equals("Estado")){
+                            CPUactual = in.readUTF();
+                            RAMactual = in.readUTF();
+                            actInfo();
+                        } 
                         if (mensaje.equals("Terminado")) {
                             servidor.removerDeArray(asig);
                             asig=servidor.asignar();
@@ -73,13 +87,18 @@ public class HilosConex extends Thread{
                     numCliente--;
                     //System.out.println("Clientes "+numCliente);
                     socketAlt.close();
-		}catch(IOException e){}
-	}
+        }catch(IOException e){}
+    }
         
         public void aumProcess(long sumando){
             vel=sumando;
             servidor.getLabelProcesados().setText((Long.valueOf(servidor.getLabelProcesados().getText())+sumando)+"");
             servidor.getLabelRestantes().setText((Long.valueOf(servidor.getLabelRestantes().getText())-(Long.valueOf(servidor.getLabelProcesados().getText())))+"");
+        }
+        
+        public void actInfo(){
+            CPUs.add(this.CPUactual);
+            RAMs.add(this.RAMactual);
         }
         
         public void finalizar(){

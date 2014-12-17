@@ -6,6 +6,7 @@
 
 package Cliente;
 
+import InfoSistema.InfoSistema;
 import MD5.Md5;
 import Servidor.Servidor;
 import java.awt.Color;
@@ -18,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import org.hyperic.sigar.SigarException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -49,6 +51,7 @@ public class Cliente extends javax.swing.JFrame {
     private long processAnt,processNew;
     private boolean Inicio;
     private Contador contador; 
+    private InfoSistema info;
     
     public Cliente() {
         initComponents();
@@ -58,6 +61,7 @@ public class Cliente extends javax.swing.JFrame {
         hiloConex=new HiloConex(this);
         processNew=0;
         Inicio = true;
+        info=new InfoSistema();
 //        hiloProcess=new HiloProcess(this);
     }
 
@@ -189,6 +193,14 @@ public class HiloLabel extends Thread{
             processAnt=processNew;
             processNew=Long.valueOf(cliente.labelProcesados.getText());
             out.writeUTF((processNew-processAnt)+"");
+            
+            out.writeUTF("Estado");
+            try {
+                String[] infoUSO=info.InfoSOalt();
+                out.writeUTF(infoUSO[0]);
+                out.writeUTF(infoUSO[1]);
+            } catch (SigarException ex) {
+            }
         } catch (IOException ex) {
         }
             try {
