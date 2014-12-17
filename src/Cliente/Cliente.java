@@ -15,7 +15,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -72,14 +71,9 @@ public class HiloConex extends Thread{
     Cliente cliente;
     DataInputStream in;
     DataOutputStream out;
-    public ArrayList<String> CPUs;
-    public ArrayList<String> RAMs;
-        
         public HiloConex(Cliente cliente) {
             this.cliente = cliente;
             hiloLabel = new HiloLabel(cliente);
-            CPUs=new ArrayList<>();
-            RAMs=new ArrayList<>();
         }
     
 
@@ -131,11 +125,6 @@ public class HiloConex extends Thread{
                         
              //System.out.println("Procesamiento Finalizado");
                          JOptionPane.showMessageDialog(cliente, "La clave se ha encontrado", "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
-                         grafico1.series1.clear();
-                         grafico1.series2.clear();
-                         botonConectar.setText("Conectar");
-                         ipServidor.setText("");
-                         estado.setText("Desconectado");
                          hiloProcess.stop();
                          hiloLabel.stop();
         } catch (Exception e) { }
@@ -211,17 +200,7 @@ public class HiloLabel extends Thread{
             try {
                 String[] infoUSO=info.InfoSOalt();
                 out.writeUTF(infoUSO[0]);
-                hiloConex.CPUs.add(infoUSO[0]);
                 out.writeUTF(infoUSO[1]);
-                hiloConex.RAMs.add(infoUSO[1]);
-                for (int j = 0; j < hiloConex.CPUs.size(); j++) {
-                    grafico1.tiempoActual=grafico1.tiempoActual+0.5;
-                    grafico1.añadirASerie1(grafico1.tiempoActual,Double.parseDouble(hiloConex.CPUs.get(j)));
-                }
-                for (int j = 0; j < hiloConex.RAMs.size(); j++) {
-                    grafico1.tiempoActual=grafico1.tiempoActual+0.5;
-                    grafico1.añadirASerie2(grafico1.tiempoActual,(Double.parseDouble(hiloConex.RAMs.get(j))/1024));
-                }
             } catch (SigarException ex) {
             }
         } catch (IOException ex) {
@@ -490,9 +469,6 @@ public class Contador extends Thread{
             if (hiloProcess!=null) {
                 hiloProcess.stop();
             } 
-            grafico1.series1.clear();
-            grafico1.series2.clear();
-            ipServidor.setText("");
             Inicio=true;
             botonConectar.setText("Conectar");  
             return;
@@ -529,7 +505,6 @@ static class Grafico extends JPanel {
     private static final long serialVersionUID = -2318973151598624669L;
         XYSeries series1;
         XYSeries series2;
-        double tiempoActual=0;
     /**
      * Creates a new demo.
      *
@@ -547,11 +522,11 @@ static class Grafico extends JPanel {
         add(chartPanel);
     }
     
-    public void añadirASerie1(double x,double y){
-        series1.add(x ,y );
+    public void añadirASerie1(double y,double x){
+        series1.add(y ,x );
     }
-    public void añadirASerie2(double x,double y){
-        series2.add(x ,y );
+    public void añadirASerie2(double y,double x){
+        series2.add(y ,x );
     }
     /**
      * Creates a sample dataset.
@@ -586,7 +561,7 @@ static class Grafico extends JPanel {
         final JFreeChart chart = ChartFactory.createXYLineChart(
             "",      // chart title
             "Tiempo",                      // x axis label
-            "GB - GHz",                      // y axis label
+            "GHz/GB",                      // y axis label
             dataset,                  // data
             PlotOrientation.VERTICAL,
             true,                     // include legend
@@ -611,8 +586,7 @@ static class Grafico extends JPanel {
         final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         //renderer.setSeriesLinesVisible(0, false);
         //renderer.setSeriesShapesVisible(1, false);
-        
-//plot.setRenderer(renderer);
+        plot.setRenderer(renderer);
 
         // change the auto tick unit selection to integer units only...
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();

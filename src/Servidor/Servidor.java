@@ -122,13 +122,6 @@ public class HiloSocket extends Thread{
             }  
             labelClave.setText(clave);
             JOptionPane.showMessageDialog(servidor, "La clave es "+clave, "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
-            botonDescifrar.setText("Descifrar");
-            campoMd5.setText("");
-            labelClave.setText("");
-            try {
-                hiloSocket.finalize();
-            } catch (Throwable ex) {
-            }
         }
 
         public void cambiarGrafico1(String ip) {
@@ -201,10 +194,6 @@ public class Velocidad extends Thread{
      
     public JLabel getLabelRestantes() {
         return labelRestantes;
-    }
-    
-    public JTextField getCampoMd5() {
-        return campoMd5;
     }
     
     public JLabel getLabelClave() {
@@ -505,7 +494,6 @@ public class Velocidad extends Thread{
     private void botonDescifrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDescifrarActionPerformed
         if(botonDescifrar.getText().equals("Descifrar")){
             md5.setClaveMd5(campoMd5.getText());
-            hiloSocket=new HiloSocket(this);
             hiloSocket.start();
             botonDescifrar.setText("Cancelar");
             return;
@@ -539,8 +527,8 @@ public class Velocidad extends Thread{
     private javax.swing.JButton botonDescifrar;
     private javax.swing.JTextField campoMd5;
     private Servidor.GraficaPrincipal graficaPrincipal1;
-    public Servidor.GraficoPequeño graficoPequeño1;
-    public Servidor.GraficoPequeño graficoPequeño2;
+    private Servidor.GraficoPequeño graficoPequeño1;
+    private Servidor.GraficoPequeño graficoPequeño2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -766,7 +754,7 @@ public GraficoPequeño() {
         final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         //renderer.setSeriesLinesVisible(0, false);
         //renderer.setSeriesShapesVisible(1, false);
-//plot.setRenderer(renderer);
+        plot.setRenderer(renderer);
 
         // change the auto tick unit selection to integer units only...
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
