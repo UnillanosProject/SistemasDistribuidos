@@ -65,7 +65,7 @@ public class Cliente extends javax.swing.JFrame {
         Inicio = true;
         info=new InfoSistema();
 //        hiloProcess=new HiloProcess(this);
-    }
+        }
 
 public class HiloConex extends Thread{   
     
@@ -99,6 +99,7 @@ public class HiloConex extends Thread{
                         in = new DataInputStream(b.getInputStream());
             out = new DataOutputStream(b.getOutputStream());
                         out.writeUTF("Esperando clave");
+                        out.writeUTF(Double.parseDouble(info.InfoSO()[2])+"");
                         mensajeIn = in.readUTF();
                         md5.setClaveMd5(mensajeIn);
                         labelMd5.setText(mensajeIn);
