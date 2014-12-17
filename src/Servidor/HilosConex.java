@@ -99,7 +99,7 @@ public class HilosConex extends Thread{
         }
         
         public void actInfo(){
-            //System.out.println("CPU:"+CPUactual+" RAM:"+RAMactual);
+            System.out.println("CPU:"+CPUactual+" RAM:"+RAMactual);
             CPUs.add(this.CPUactual);
             RAMs.add(this.RAMactual);
         }

@@ -133,6 +133,8 @@ public class HiloConex extends Thread{
                          grafico1.series1.clear();
                          grafico1.series2.clear();
                          botonConectar.setText("Conectar");
+                         ipServidor.setText("");
+                         estado.setText("Desconectado");
                          hiloProcess.stop();
                          hiloLabel.stop();
         } catch (Exception e) { }
@@ -488,6 +490,7 @@ public class Contador extends Thread{
             } 
             grafico1.series1.clear();
             grafico1.series2.clear();
+            ipServidor.setText("");
             Inicio=true;
             botonConectar.setText("Conectar");  
             return;

@@ -123,6 +123,12 @@ public class HiloSocket extends Thread{
             labelClave.setText(clave);
             JOptionPane.showMessageDialog(servidor, "La clave es "+clave, "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
             botonDescifrar.setText("Descifrar");
+            campoMd5.setText("");
+            labelClave.setText("");
+            try {
+                hiloSocket.finalize();
+            } catch (Throwable ex) {
+            }
         }
 
         public void cambiarGrafico1(String ip) {
@@ -191,6 +197,10 @@ public class Velocidad extends Thread{
      
     public JLabel getLabelRestantes() {
         return labelRestantes;
+    }
+    
+    public JTextField getCampoMd5() {
+        return campoMd5;
     }
     
     public JLabel getLabelClave() {
@@ -491,6 +501,7 @@ public class Velocidad extends Thread{
     private void botonDescifrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDescifrarActionPerformed
         if(botonDescifrar.getText().equals("Descifrar")){
             md5.setClaveMd5(campoMd5.getText());
+            hiloSocket=new HiloSocket(this);
             hiloSocket.start();
             botonDescifrar.setText("Cancelar");
             return;
