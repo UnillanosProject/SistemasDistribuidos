@@ -33,7 +33,7 @@ public class InfoSistema {
         CpuInfo info = infos[0];
         infoSO[0]=sys.getDescription(); //Sistema Operativo
         infoSO[1]=info.getVendor()+" "+info.getModel(); //Info CPU
-        infoSO[2]=info.getMhz()+""; //Velocidad CPU (MGz)
+        infoSO[2]=info.getMhz()+""; //Velocidad CPU (MHz)
         infoSO[3]=info.getTotalCores()+""; //Cantidad CPU
         infoSO[4]=enMegaBytes(memoria.getTotal())+""; //RAM Total (MB)
         return infoSO;
