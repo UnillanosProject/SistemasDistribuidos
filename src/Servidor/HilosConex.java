@@ -46,6 +46,12 @@ public class HilosConex extends Thread{
                 ip=socketAlt.getInetAddress().toString().substring(1);
                 servidor.getSelector1().addItem(ip);
                 servidor.getSelector2().addItem(ip);
+                if(numCliente==1){
+                    servidor.getSelector1().removeItemAt(0);
+                    servidor.graficoPequeño1.series1.clear();
+                    servidor.getSelector2().removeItemAt(0);
+                    servidor.graficoPequeño2.series1.clear();
+                }
                 //System.out.println(ip+" Conectado...");
         try{
                     while(!mensaje.equals("fin")){
@@ -90,7 +96,7 @@ public class HilosConex extends Thread{
                     }
                     //System.out.println("Cliente ["+numCliente+"] se Desconecto!!");
                     numCliente--;
-                    //System.out.println("Clientes "+numCliente);
+                    System.out.println("Clientes "+numCliente);
                     socketAlt.close();
         }catch(IOException e){}
     }
@@ -139,6 +145,10 @@ public class Contador extends Thread{
             asig.setAsignado(false);
             servidor.disminuirConectados();
 //            Object[] objetosSelector1=
+            if(numCliente==1){
+                servidor.getSelector1().addItem("...");
+                servidor.getSelector2().addItem("...");  
+            }
             for (int i = 0; i < servidor.getSelector1().getItemCount(); i++) {
                 if (servidor.getSelector1().getItemAt(i).toString().equals(ip)) {
                     servidor.getSelector1().removeItemAt(i);
@@ -149,6 +159,8 @@ public class Contador extends Thread{
                     servidor.graficoPequeño2.series1.clear();
                 }
             }
+            numCliente--;
+            System.out.println(numCliente);
         }
     }
 }

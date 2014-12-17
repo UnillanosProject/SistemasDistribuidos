@@ -139,7 +139,7 @@ public class HiloConex extends Thread{
                          estado.setText("Desconectado");
                          labelMd5.setText("");
                          labelRestantes.setText("");
-                         labelProcesados.setText("");
+                         labelProcesados.setText("0");
                          labelActual.setText("");
                          hiloProcess.stop();
                          hiloLabel.stop();
@@ -217,12 +217,12 @@ public class HiloLabel extends Thread{
                 String[] infoUSO=info.InfoSOalt();
                 out.writeUTF(infoUSO[0]);
                 out.writeUTF(infoUSO[1]);
-                    grafico1.tiempoActual=grafico1.tiempoActual+0.5;
+                    grafico1.tiempoActual=grafico1.tiempoActual+0.25;
                     info.InfoSO();
                     Double Ghz=Double.parseDouble(info.infoSO[2])/1024;
                     grafico1.añadirASerie1(grafico1.tiempoActual,(Double.parseDouble(infoUSO[0])*Ghz/100));
                 
-                    grafico1.tiempoActual=grafico1.tiempoActual+0.5;
+                    grafico1.tiempoActual=grafico1.tiempoActual+0.25;
                     grafico1.añadirASerie2(grafico1.tiempoActual,(Double.parseDouble(infoUSO[1])/1024));
                 
             } catch (SigarException ex) {
@@ -495,6 +495,7 @@ public class Contador extends Thread{
             }
             grafico1.series1.clear();
             grafico1.series2.clear();
+            grafico1.tiempoActual=0;
 //            ipServidor.setText("");
             Inicio=true;
             botonConectar.setText("Conectar");  

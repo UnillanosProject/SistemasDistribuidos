@@ -1,5 +1,6 @@
 package Servidor;
 
+import InfoSistema.InfoSistema;
 import MD5.GeneradorMD5;
 import MD5.Md5;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.hyperic.sigar.SigarException;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -49,6 +51,10 @@ public class Servidor extends javax.swing.JFrame {
         md5=new Md5();
         asignaciones=asignaciones();
 //        panelGraficoPrincipal.add(new PanelGraficaPrincipal());
+    }
+
+    public JLabel getLabelConectados() {
+        return labelConectados;
     }
     
     public void disminuirConectados(){
@@ -128,6 +134,8 @@ public class HiloSocket extends Thread{
             labelRestantes.setText("");
             campoMd5.setText("");
             labelClave.setText("");
+            graficoPequeño1.series1.clear();
+            graficoPequeño2.series1.clear();
             try {
                 hiloSocket.finalize();
                 hilosConex.clear();
@@ -136,12 +144,18 @@ public class HiloSocket extends Thread{
         }
 
         public void cambiarGrafico1(String ip) {
+            InfoSistema info=new InfoSistema();
             for (int i = 0; i < hilosConex.size(); i++) {
                 if (hilosConex.get(i).ip.equals(ip)) {
                     ArrayList<String> CPUs = hilosConex.get(i).CPUs;
                     for (int j = 0; j < CPUs.size(); j++) {
+                        try {
+                            info.InfoSO();
+                        } catch (SigarException ex) {
+                        }
+                        Double Ghz=Double.parseDouble(info.infoSO[2])/1024;
                         graficoPequeño1.tiempoActual=graficoPequeño1.tiempoActual+0.5;
-                        graficoPequeño1.añadirASerie(graficoPequeño1.tiempoActual,Double.parseDouble(CPUs.get(j)));
+                        graficoPequeño1.añadirASerie(graficoPequeño1.tiempoActual,(Double.parseDouble(CPUs.get(j))*Ghz/100));
                     }
                 }
             }
@@ -173,22 +187,21 @@ public class Velocidad extends Thread{
                 
                 double cpuTotal=0,ramTotal=0;
                 for (int q = 0; q < hilosConex.size(); q++) {
+                    cpuTotal+=Double.parseDouble(hilosConex.get(q).CPUactual)*(hilosConex.get(q).cpuTotal/1024)/100;
+                    ramTotal+=Double.parseDouble(hilosConex.get(q).RAMactual)/1024;
                     if (hilosConex.get(q).ip.equals(selector1.getSelectedItem().toString())) {
 //                        if (hilosConex.get(q).cpuTotal!=0) {
                         graficoPequeño1.tiempoActual=graficoPequeño1.tiempoActual+0.5;
-                        graficoPequeño1.añadirASerie(graficoPequeño1.tiempoActual,Double.parseDouble(hilosConex.get(q).CPUactual)*(hilosConex.get(q).cpuTotal/1000)/100);
+                        graficoPequeño1.añadirASerie(graficoPequeño1.tiempoActual,cpuTotal);
 //                        }
                     }
                     if (hilosConex.get(q).ip.equals(selector2.getSelectedItem().toString())) {
                         graficoPequeño2.tiempoActual=graficoPequeño2.tiempoActual+0.5;
-                        graficoPequeño2.añadirASerie(graficoPequeño2.tiempoActual,Double.parseDouble(hilosConex.get(q).RAMactual)/1024);
+                        graficoPequeño2.añadirASerie(graficoPequeño2.tiempoActual,ramTotal);
                     }
-//                    System.out.println(Double.parseDouble(hilosConex.get(q).CPUactual)*(hilosConex.get(q).cpuTotal/1000)/100);
-                    cpuTotal+=Double.parseDouble(hilosConex.get(q).CPUactual)*(hilosConex.get(q).cpuTotal/1000)/100;
-                    ramTotal+=Double.parseDouble(hilosConex.get(q).RAMactual);
                 }
                 graficaPrincipal1.setValorCPU(cpuTotal);
-                graficaPrincipal1.setValorRAM(ramTotal/1024);
+                graficaPrincipal1.setValorRAM(ramTotal);
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
             }
@@ -654,7 +667,7 @@ static class GraficaPrincipal extends JPanel
                         
                         dialplot.mapDatasetToScale(1, 1);
                         
-                        StandardDialRange standarddialrange = new StandardDialRange(90D, 100D, Color.blue);
+                        StandardDialRange standarddialrange = new StandardDialRange(0D, 50D, Color.blue);
                         standarddialrange.setScaleIndex(1);
                         standarddialrange.setInnerRadius(0.58999999999999997D);
                         standarddialrange.setOuterRadius(0.58999999999999997D);
@@ -752,11 +765,11 @@ public GraficoPequeño() {
         final JFreeChart chart = ChartFactory.createXYLineChart(
             "",      // chart title
             "Tiempo",                      // x axis label
-            "GHz",                      // y axis label
+            "CPU (GHz)",                      // y axis label
             dataset,                  // data
             PlotOrientation.VERTICAL,
-            true,                     // include legend
-            true,                     // tooltips
+            false,                     // include legend
+            false,                     // tooltips
             true                     // urls
         );
 
@@ -858,11 +871,11 @@ public GraficoPequeño2() {
         final JFreeChart chart = ChartFactory.createXYLineChart(
             "",      // chart title
             "Tiempo",                      // x axis label
-            "GB",                      // y axis label
+            "RAM (GB)",                      // y axis label
             dataset,                  // data
             PlotOrientation.VERTICAL,
-            true,                     // include legend
-            true,                     // tooltips
+            false,                     // include legend
+            false,                     // tooltips
             true                     // urls
         );
 
