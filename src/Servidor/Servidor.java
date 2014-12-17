@@ -193,12 +193,12 @@ public class Velocidad extends Thread{
                     if (hilosConex.get(q).ip.equals(selector1.getSelectedItem().toString())) {
 //                        if (hilosConex.get(q).cpuTotal!=0) {
                         graficoPequeño1.tiempoActual=graficoPequeño1.tiempoActual+0.5;
-                        graficoPequeño1.añadirASerie(graficoPequeño1.tiempoActual,cpuTotal);
+                        graficoPequeño1.añadirASerie(graficoPequeño1.tiempoActual,(Double.parseDouble(hilosConex.get(q).CPUactual)*(hilosConex.get(q).cpuTotal/1024)/100));
 //                        }
                     }
                     if (hilosConex.get(q).ip.equals(selector2.getSelectedItem().toString())) {
                         graficoPequeño2.tiempoActual=graficoPequeño2.tiempoActual+0.5;
-                        graficoPequeño2.añadirASerie(graficoPequeño2.tiempoActual,ramTotal);
+                        graficoPequeño2.añadirASerie(graficoPequeño2.tiempoActual,(Double.parseDouble(hilosConex.get(q).RAMactual)/1024));
                     }
                 }
                 graficaPrincipal1.setValorCPU(cpuTotal);
@@ -544,6 +544,7 @@ public class Velocidad extends Thread{
 
     private void selector1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_selector1ItemStateChanged
         if (selector1.getSelectedItem().toString().equals("...")) {
+            graficoPequeño1.series1.clear();
             return;
         }
         graficoPequeño1.series1.clear();
@@ -553,6 +554,7 @@ public class Velocidad extends Thread{
 
     private void selector2ItemStateChanged(java.awt.event.ItemEvent evt) {                                           
         if (selector2.getSelectedItem().toString().equals("...")) {
+            graficoPequeño2.series1.clear();
             return;
         }
         graficoPequeño2.series1.clear();

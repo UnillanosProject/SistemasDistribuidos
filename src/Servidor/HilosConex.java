@@ -28,7 +28,7 @@ public class HilosConex extends Thread{
     public HilosConex(Servidor servidor,Socket socketAlt, int nC, String claveAux,Asignacion asig){
         this.servidor=servidor;
                 this.socketAlt = socketAlt;
-        numCliente = nC;
+                numCliente = nC;
                 clave=claveAux;
                 this.asig=asig;
                 CPUs=new ArrayList<>();
@@ -46,6 +46,7 @@ public class HilosConex extends Thread{
                 ip=socketAlt.getInetAddress().toString().substring(1);
                 servidor.getSelector1().addItem(ip);
                 servidor.getSelector2().addItem(ip);
+//                System.out.println(numCliente);
 //                if(numCliente==1){
 //                    servidor.getSelector1().removeItemAt(0);
 //                    servidor.graficoPequeño1.series1.clear();
@@ -98,7 +99,7 @@ public class HilosConex extends Thread{
                     }
                     //System.out.println("Cliente ["+numCliente+"] se Desconecto!!");
                     numCliente--;
-                    System.out.println("Clientes "+numCliente);
+//                    System.out.println("Clientes "+numCliente);
                     socketAlt.close();
         }catch(IOException e){}
     }
@@ -161,7 +162,11 @@ public class Contador extends Thread{
                     servidor.getSelector2().removeItemAt(i);
                 }
             }
+            ip="";
+            CPUactual="0";
+            RAMactual="0";
             numCliente--;
+//            System.out.println(numCliente);
         }
     }
 }
