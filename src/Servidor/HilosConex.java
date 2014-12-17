@@ -46,7 +46,7 @@ public class HilosConex extends Thread{
                 ip=socketAlt.getInetAddress().toString().substring(1);
                 servidor.getSelector1().addItem(ip);
                 servidor.getSelector2().addItem(ip);
-                System.out.println(ip+" Conectado...");
+                //System.out.println(ip+" Conectado...");
         try{
                     while(!mensaje.equals("fin")){
                         contador=new Contador();
@@ -132,7 +132,7 @@ public class Contador extends Thread{
             //System.out.println(tiempo);
         }
         if (tiempo>=3000) {
-            System.out.println(ip+" Desconectado...");
+            //System.out.println(ip+" Desconectado...");
             vel=0;
             CPUactual="0";
             RAMactual="0";

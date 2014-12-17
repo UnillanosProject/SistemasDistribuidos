@@ -137,6 +137,10 @@ public class HiloConex extends Thread{
                          ipServidor.setText("");
                          estado.setForeground(new java.awt.Color(148, 47, 47));
                          estado.setText("Desconectado");
+                         labelMd5.setText("");
+                         labelRestantes.setText("");
+                         labelProcesados.setText("");
+                         labelActual.setText("");
                          hiloProcess.stop();
                          hiloLabel.stop();
         } catch (Exception e) { }

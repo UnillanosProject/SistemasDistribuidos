@@ -98,7 +98,8 @@ public class HiloSocket extends Thread{
         @Override
         public void run(){
             ServerSocket socketServ;
-        System.out.println("Esperando conexiones");
+        //System.out.println("Esperando conexiones");
+            JOptionPane.showMessageDialog(servidor, "Esperando Conexiones...", "Servidor Listo!!", JOptionPane.INFORMATION_MESSAGE);
         try{
             socketServ = new ServerSocket(puerto);
                         velocidad.start();
@@ -123,6 +124,8 @@ public class HiloSocket extends Thread{
             labelClave.setText(clave);
             JOptionPane.showMessageDialog(servidor, "La clave es "+clave, "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
             botonDescifrar.setText("Descifrar");
+            labelProcesados.setText("");
+            labelRestantes.setText("");
             campoMd5.setText("");
             labelClave.setText("");
             try {
