@@ -53,6 +53,7 @@ public class Cliente extends javax.swing.JFrame {
     private boolean Inicio;
     private Contador contador; 
     private InfoSistema info;
+    private long procesadosTotales;
     
     public Cliente() {
         initComponents();
@@ -73,7 +74,6 @@ public class HiloConex extends Thread{
     DataOutputStream out;
     public ArrayList<String> CPUs;
     public ArrayList<String> RAMs;
-        
         public HiloConex(Cliente cliente) {
             this.cliente = cliente;
             hiloLabel = new HiloLabel(cliente);
@@ -165,6 +165,7 @@ public class HiloProcess extends Thread{
     public void run(){
            //System.out.println("Asignados: "+inI+","+inJ);
            md5.recorrer(inI,inJ);
+           procesadosTotales=Integer.valueOf(labelProcesados.getText());
             try {
 //                cliente.setTerminado(true);
                 out.writeUTF("Terminado");
@@ -180,7 +181,7 @@ public class HiloProcess extends Thread{
 }
 
     public void setProcesados(long procesados, String actual){
-        labelProcesados.setText(""+procesados);
+        labelProcesados.setText(""+(procesadosTotales+procesados));
         labelActual.setText(""+actual);
 //        labelProcesados.setText(""+procesados+", "+actual);
         labelRestantes.setText(""+(1727604-procesados));
@@ -490,7 +491,7 @@ public class Contador extends Thread{
             }
             if (hiloProcess!=null) {
                 hiloProcess.stop();
-            } 
+            }
             grafico1.series1.clear();
             grafico1.series2.clear();
             ipServidor.setText("");
@@ -612,8 +613,8 @@ static class Grafico extends JPanel {
         final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         //renderer.setSeriesLinesVisible(0, false);
         //renderer.setSeriesShapesVisible(1, false);
-        
-//plot.setRenderer(renderer);
+               
+        //plot.setRenderer(renderer);
 
         // change the auto tick unit selection to integer units only...
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();

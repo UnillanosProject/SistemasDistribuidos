@@ -149,7 +149,7 @@ public class HiloSocket extends Thread{
                     ArrayList<String> RAMs = hilosConex.get(i).RAMs;
                     for (int j = 0; j < RAMs.size(); j++) {
                         graficoPequeño2.tiempoActual=graficoPequeño2.tiempoActual+0.5;
-                        graficoPequeño2.añadirASerie(graficoPequeño2.tiempoActual,Double.parseDouble(RAMs.get(j)));
+                        graficoPequeño2.añadirASerie(graficoPequeño2.tiempoActual,Double.parseDouble(RAMs.get(j))/1024);
                     }
                 }
             }
@@ -168,6 +168,7 @@ public class Velocidad extends Thread{
                 vel=vel*2;
                 servidor.labelVelocidad.setText(vel+" / seg");
                 
+                double cpuTotal=0,ramTotal=0;
                 for (int q = 0; q < hilosConex.size(); q++) {
                     if (hilosConex.get(q).ip.equals(selector1.getSelectedItem().toString())) {
                         graficoPequeño1.tiempoActual=graficoPequeño1.tiempoActual+0.5;
@@ -175,10 +176,13 @@ public class Velocidad extends Thread{
                     }
                     if (hilosConex.get(q).ip.equals(selector2.getSelectedItem().toString())) {
                         graficoPequeño2.tiempoActual=graficoPequeño2.tiempoActual+0.5;
-                        graficoPequeño2.añadirASerie(graficoPequeño2.tiempoActual,Double.parseDouble(hilosConex.get(q).RAMactual));
+                        graficoPequeño2.añadirASerie(graficoPequeño2.tiempoActual,Double.parseDouble(hilosConex.get(q).RAMactual)/1024);
                     }
+                    cpuTotal+=Double.parseDouble(hilosConex.get(q).CPUactual);
+                    ramTotal+=Double.parseDouble(hilosConex.get(q).RAMactual);
                 }
-                
+                graficaPrincipal1.setValorCPU(cpuTotal);
+                graficaPrincipal1.setValorRAM(ramTotal/1000);
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
             }
@@ -577,7 +581,14 @@ static class GraficaPrincipal extends JPanel
 //                        dataset1.setValue(new Integer(slider1.getValue()));
 //                        dataset2.setValue(new Integer(slider2.getValue()));
 //                }
-
+                
+                public void setValorCPU(double valor){
+                    dataset1.setValue(valor);
+                }
+                public void setValorRAM(double valor){
+                    dataset2.setValue(valor);
+                }
+                
                 public GraficaPrincipal()
                 {
                         super(new BorderLayout());
@@ -602,11 +613,11 @@ static class GraficaPrincipal extends JPanel
                         dialbackground.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.VERTICAL));
                         dialplot.setBackground(dialbackground);
                         
-                        DialTextAnnotation dialtextannotation = new DialTextAnnotation("CPU");
+                        DialTextAnnotation dialtextannotation = new DialTextAnnotation("CPU(GHz) - Memoria(GB)");
                         dialtextannotation.setFont(new Font("Dialog", 1, 14));
                         dialtextannotation.setRadius(0.69999999999999996D);
                         dialplot.addLayer(dialtextannotation);
-                        
+                                               
                         DialValueIndicator dialvalueindicator = new DialValueIndicator(0);
                         dialvalueindicator.setFont(new Font("Dialog", 0, 10));
                         dialvalueindicator.setOutlinePaint(Color.darkGray);
@@ -620,7 +631,7 @@ static class GraficaPrincipal extends JPanel
                         dialvalueindicator1.setRadius(0.59999999999999998D);
                         dialvalueindicator1.setAngle(-77D);
                         dialplot.addLayer(dialvalueindicator1);
-                        
+                                                
                         StandardDialScale standarddialscale = new StandardDialScale(0D, 100D, -120D, -300D, 10D, 4);
                         standarddialscale.setTickRadius(0.88D);
                         standarddialscale.setTickLabelOffset(0.14999999999999999D);
@@ -760,7 +771,7 @@ public GraficoPequeño() {
         final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         //renderer.setSeriesLinesVisible(0, false);
         //renderer.setSeriesShapesVisible(1, false);
-//plot.setRenderer(renderer);
+        //plot.setRenderer(renderer);
 
         // change the auto tick unit selection to integer units only...
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
