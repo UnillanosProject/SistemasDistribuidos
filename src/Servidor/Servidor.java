@@ -130,8 +130,8 @@ public class HiloSocket extends Thread{
             labelClave.setText(clave);
             JOptionPane.showMessageDialog(servidor, "La clave es "+clave, "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
             botonDescifrar.setText("Descifrar");
-            labelProcesados.setText("");
-            labelRestantes.setText("");
+            labelProcesados.setText("0");
+            labelRestantes.setText("0");
             campoMd5.setText("");
             labelClave.setText("");
             graficoPequeño1.series1.clear();
@@ -161,6 +161,7 @@ public class HiloSocket extends Thread{
             }
         }
         public void cambiarGrafico2(String ip) {
+            graficoPequeño2.series1.clear();
             for (int i = 0; i < hilosConex.size(); i++) {
                 if (hilosConex.get(i).ip.equals(ip)) {
                     ArrayList<String> RAMs = hilosConex.get(i).RAMs;
