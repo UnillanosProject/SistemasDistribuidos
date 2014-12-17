@@ -523,8 +523,8 @@ public class Velocidad extends Thread{
     private javax.swing.JButton botonDescifrar;
     private javax.swing.JTextField campoMd5;
     private Servidor.GraficaPrincipal graficaPrincipal1;
-    private Servidor.GraficoPequeño graficoPequeño1;
-    private Servidor.GraficoPequeño graficoPequeño2;
+    public Servidor.GraficoPequeño graficoPequeño1;
+    public Servidor.GraficoPequeño graficoPequeño2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

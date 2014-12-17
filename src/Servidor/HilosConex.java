@@ -99,7 +99,7 @@ public class HilosConex extends Thread{
         }
         
         public void actInfo(){
-            System.out.println("CPU:"+CPUactual+" RAM:"+RAMactual);
+            //System.out.println("CPU:"+CPUactual+" RAM:"+RAMactual);
             CPUs.add(this.CPUactual);
             RAMs.add(this.RAMactual);
         }
@@ -136,9 +136,11 @@ public class Contador extends Thread{
             for (int i = 0; i < servidor.getSelector1().getItemCount(); i++) {
                 if (servidor.getSelector1().getItemAt(i).toString().equals(ip)) {
                     servidor.getSelector1().removeItemAt(i);
+                    servidor.graficoPequeño1.series1.clear();
                 }
                 if (servidor.getSelector2().getItemAt(i).toString().equals(ip)) {
                     servidor.getSelector2().removeItemAt(i);
+                    servidor.graficoPequeño2.series1.clear();
                 }
             }
         }
