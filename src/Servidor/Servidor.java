@@ -182,7 +182,7 @@ public class Velocidad extends Thread{
                     ramTotal+=Double.parseDouble(hilosConex.get(q).RAMactual);
                 }
                 graficaPrincipal1.setValorCPU(cpuTotal);
-                graficaPrincipal1.setValorRAM(ramTotal/1000);
+                graficaPrincipal1.setValorRAM(ramTotal/1024);
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
             }
