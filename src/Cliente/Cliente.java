@@ -215,7 +215,9 @@ public class HiloLabel extends Thread{
                 hiloConex.RAMs.add(infoUSO[1]);
                 for (int j = 0; j < hiloConex.CPUs.size(); j++) {
                     grafico1.tiempoActual=grafico1.tiempoActual+0.5;
-                    grafico1.añadirASerie1(grafico1.tiempoActual,Double.parseDouble(hiloConex.CPUs.get(j)));
+                    info.InfoSO();
+                    Double Ghz=Double.parseDouble(info.infoSO[2])/1024;
+                    grafico1.añadirASerie1(grafico1.tiempoActual,(Double.parseDouble(hiloConex.CPUs.get(j))*Ghz/100));
                 }
                 for (int j = 0; j < hiloConex.RAMs.size(); j++) {
                     grafico1.tiempoActual=grafico1.tiempoActual+0.5;

@@ -509,6 +509,9 @@ public class Velocidad extends Thread{
         }
         if(botonDescifrar.getText().equals("Cancelar")){
             getHiloSocket().hilosConex.clear();
+            for (int i = 0; i < getHiloSocket().hilosConex.size(); i++) {
+                getHiloSocket().hilosConex.get(i).finalizar();
+            }
             hiloSocket.stop();
             botonDescifrar.setText("Descifrar");
             return;
