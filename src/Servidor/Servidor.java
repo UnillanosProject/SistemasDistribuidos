@@ -127,6 +127,7 @@ public class HiloSocket extends Thread{
             labelClave.setText("");
             try {
                 hiloSocket.finalize();
+                hilosConex.clear();
             } catch (Throwable ex) {
             }
         }
@@ -507,6 +508,7 @@ public class Velocidad extends Thread{
             return;
         }
         if(botonDescifrar.getText().equals("Cancelar")){
+            getHiloSocket().hilosConex.clear();
             hiloSocket.stop();
             botonDescifrar.setText("Descifrar");
             return;

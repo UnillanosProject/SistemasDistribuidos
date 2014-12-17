@@ -134,6 +134,7 @@ public class HiloConex extends Thread{
                          grafico1.series2.clear();
                          botonConectar.setText("Conectar");
                          ipServidor.setText("");
+                         estado.setForeground(new java.awt.Color(148, 47, 47));
                          estado.setText("Desconectado");
                          hiloProcess.stop();
                          hiloLabel.stop();
