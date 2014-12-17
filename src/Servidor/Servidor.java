@@ -654,13 +654,13 @@ static class GraficaPrincipal extends JPanel
                         dialvalueindicator1.setAngle(-77D);
                         dialplot.addLayer(dialvalueindicator1);
                                                 
-                        StandardDialScale standarddialscale = new StandardDialScale(0D, 50D, -120D, -300D, 10D, 4);
+                        StandardDialScale standarddialscale = new StandardDialScale(0D, 30D, -120D, -300D, 10D, 4);
                         standarddialscale.setTickRadius(0.88D);
                         standarddialscale.setTickLabelOffset(0.14999999999999999D);
                         standarddialscale.setTickLabelFont(new Font("Dialog", 0, 14));
                         dialplot.addScale(0, standarddialscale);
                         
-                        StandardDialScale standarddialscale1 = new StandardDialScale(0.0D, 50D, -120D, -300D, 10D, 4);
+                        StandardDialScale standarddialscale1 = new StandardDialScale(0.0D, 30D, -120D, -300D, 10D, 4);
                         standarddialscale1.setTickRadius(0.5D);
                         standarddialscale1.setTickLabelOffset(0.14999999999999999D);
                         standarddialscale1.setTickLabelFont(new Font("Dialog", 0, 10));
