@@ -52,6 +52,7 @@ public class Cliente extends javax.swing.JFrame {
     private boolean Inicio;
     private Contador contador; 
     private InfoSistema info;
+    private long procesadosTotales;
     
     public Cliente() {
         initComponents();
@@ -153,6 +154,7 @@ public class HiloProcess extends Thread{
     public void run(){
            //System.out.println("Asignados: "+inI+","+inJ);
            md5.recorrer(inI,inJ);
+           procesadosTotales=Integer.valueOf(labelProcesados.getText());
             try {
 //                cliente.setTerminado(true);
                 out.writeUTF("Terminado");
@@ -168,7 +170,7 @@ public class HiloProcess extends Thread{
 }
 
     public void setProcesados(long procesados, String actual){
-        labelProcesados.setText(""+procesados);
+        labelProcesados.setText(""+(procesadosTotales+procesados));
         labelActual.setText(""+actual);
 //        labelProcesados.setText(""+procesados+", "+actual);
         labelRestantes.setText(""+(1727604-procesados));

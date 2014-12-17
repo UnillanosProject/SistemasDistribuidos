@@ -19,8 +19,8 @@ public class HilosConex extends Thread{
         private Contador contador;
         public ArrayList<String> CPUs;
         public ArrayList<String> RAMs;
-        public String CPUactual;
-        public String RAMactual;
+        public String CPUactual="0";
+        public String RAMactual="0";
         public String ip;
         long vel;
     
@@ -94,12 +94,13 @@ public class HilosConex extends Thread{
         
         public void aumProcess(long sumando){
             vel=sumando;
-            servidor.getLabelProcesados().setText((Long.valueOf(servidor.getLabelProcesados().getText())+sumando)+"");
-            servidor.getLabelRestantes().setText((Long.valueOf(servidor.getLabelRestantes().getText())-(Long.valueOf(servidor.getLabelProcesados().getText())))+"");
+            long nuevoValor=(Long.valueOf(servidor.getLabelProcesados().getText())+sumando);
+            servidor.getLabelProcesados().setText(nuevoValor+"");
+            servidor.getLabelRestantes().setText(""+(Long.valueOf(servidor.getLabelRestantes().getText())-nuevoValor));
         }
         
         public void actInfo(){
-            System.out.println("CPU:"+CPUactual+" RAM:"+RAMactual);
+//            System.out.println("CPU:"+CPUactual+" RAM:"+RAMactual);
             CPUs.add(this.CPUactual);
             RAMs.add(this.RAMactual);
         }
@@ -130,6 +131,8 @@ public class Contador extends Thread{
         if (tiempo>=3000) {
             System.out.println(ip+" Desconectado...");
             vel=0;
+            CPUactual="0";
+            RAMactual="0";
             asig.setAsignado(false);
             servidor.disminuirConectados();
 //            Object[] objetosSelector1=
