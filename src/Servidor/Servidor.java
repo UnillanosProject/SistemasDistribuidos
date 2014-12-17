@@ -110,9 +110,7 @@ public class HiloSocket extends Thread{
 //              System.out.println("Se conectó cliente "+HilosConex.numCliente);
                 HilosConex hilo=new HilosConex(servidor,socket,HilosConex.numCliente,md5.getClaveMd5(),asignar());
                                 hilo.start();
-                                hilosConex.add(hilo);
-                 selector1.addItem(hilo.ip);
-                 selector2.addItem(hilo.ip);
+                                hilosConex.add(hilo);                
             }
         }catch(IOException e){}
         }
@@ -197,6 +195,15 @@ public class Velocidad extends Thread{
     public JLabel getLabelClave() {
         return labelClave;
     }
+
+    public JComboBox getSelector1() {
+        return selector1;
+    }
+
+    public JComboBox getSelector2() {
+        return selector2;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -478,9 +485,6 @@ public class Velocidad extends Thread{
         clave = obj.md5(Key);
         }
         campoMd5.setText(clave);
-        graficoPequeño1.añadirASerie(1, 1);
-        graficoPequeño1.añadirASerie(2, 2);
-        graficoPequeño2.añadirASerie(3, 4);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botonDescifrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDescifrarActionPerformed
@@ -498,12 +502,18 @@ public class Velocidad extends Thread{
     }//GEN-LAST:event_botonDescifrarActionPerformed
 
     private void selector1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_selector1ItemStateChanged
+        if (selector1.getSelectedItem().toString().equals("...")) {
+            return;
+        }
         graficoPequeño1.series1.clear();
         graficoPequeño1.tiempoActual=0;
         hiloSocket.cambiarGrafico1(selector1.getSelectedItem().toString());
     }//GEN-LAST:event_selector1ItemStateChanged
 
     private void selector2ItemStateChanged(java.awt.event.ItemEvent evt) {                                           
+        if (selector2.getSelectedItem().toString().equals("...")) {
+            return;
+        }
         graficoPequeño2.series1.clear();
         graficoPequeño2.tiempoActual=0;
         hiloSocket.cambiarGrafico2(selector2.getSelectedItem().toString());

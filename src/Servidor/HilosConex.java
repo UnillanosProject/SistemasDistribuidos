@@ -43,6 +43,8 @@ public class HilosConex extends Thread{
     public void run(){
         String mensaje="";
                 ip=socketAlt.getInetAddress().toString().substring(1);
+                servidor.getSelector1().addItem(ip);
+                servidor.getSelector2().addItem(ip);
                 System.out.println(ip+" Conectado...");
         try{
                     while(!mensaje.equals("fin")){
@@ -97,6 +99,7 @@ public class HilosConex extends Thread{
         }
         
         public void actInfo(){
+            System.out.println("CPU:"+CPUactual+" RAM:"+RAMactual);
             CPUs.add(this.CPUactual);
             RAMs.add(this.RAMactual);
         }
@@ -129,6 +132,15 @@ public class Contador extends Thread{
             vel=0;
             asig.setAsignado(false);
             servidor.disminuirConectados();
+//            Object[] objetosSelector1=
+            for (int i = 0; i < servidor.getSelector1().getItemCount(); i++) {
+                if (servidor.getSelector1().getItemAt(i).toString().equals(ip)) {
+                    servidor.getSelector1().removeItemAt(i);
+                }
+                if (servidor.getSelector2().getItemAt(i).toString().equals(ip)) {
+                    servidor.getSelector2().removeItemAt(i);
+                }
+            }
         }
     }
 }
