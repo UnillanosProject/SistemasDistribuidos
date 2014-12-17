@@ -22,7 +22,7 @@ public class HilosConex extends Thread{
         public String CPUactual="0";
         public String RAMactual="0";
         public String ip;
-        public double cpuTotal;
+        public double cpuTotal=0;
         long vel;
     
     public HilosConex(Servidor servidor,Socket socketAlt, int nC, String claveAux,Asignacion asig){
@@ -98,8 +98,8 @@ public class HilosConex extends Thread{
         public void aumProcess(long sumando){
             vel=sumando;
             long nuevoValor=(Long.valueOf(servidor.getLabelProcesados().getText())+sumando);
-            servidor.getLabelProcesados().setText(nuevoValor+"");
-            servidor.getLabelRestantes().setText(""+(Long.valueOf(servidor.getLabelRestantes().getText())-nuevoValor));
+            servidor.getLabelProcesados().setText(nuevoValor+"");            
+            servidor.getLabelRestantes().setText(""+(Long.valueOf(servidor.getLabelRestantes().getText())-sumando));
         }
         
         public void actInfo(){
