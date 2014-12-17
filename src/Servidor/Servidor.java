@@ -247,7 +247,7 @@ public class Velocidad extends Thread{
         selector1 = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
         selector2 = new javax.swing.JComboBox();
-        graficoPequeño2 = new Servidor.GraficoPequeño();
+        graficoPequeño2 = new Servidor.GraficoPequeño2();
         graficoPequeño1 = new Servidor.GraficoPequeño();
         jPanel1 = new javax.swing.JPanel();
         labelConectados = new javax.swing.JLabel();
@@ -545,7 +545,7 @@ public class Velocidad extends Thread{
     private javax.swing.JTextField campoMd5;
     private Servidor.GraficaPrincipal graficaPrincipal1;
     public Servidor.GraficoPequeño graficoPequeño1;
-    public Servidor.GraficoPequeño graficoPequeño2;
+    public Servidor.GraficoPequeño2 graficoPequeño2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -705,7 +705,7 @@ public GraficoPequeño() {
      */
     private XYDataset createDataset() {
         
-        series1 = new XYSeries("");
+        series1 = new XYSeries("CPU");
 //        series1.add(1.0, 1.0);
 //        series1.add(2.0, 4.0);
 //        series1.add(3.0, 3.0);
@@ -746,7 +746,113 @@ public GraficoPequeño() {
         final JFreeChart chart = ChartFactory.createXYLineChart(
             "",      // chart title
             "Tiempo",                      // x axis label
-            "GHz - GB",                      // y axis label
+            "GHz",                      // y axis label
+            dataset,                  // data
+            PlotOrientation.VERTICAL,
+            true,                     // include legend
+            true,                     // tooltips
+            true                     // urls
+        );
+
+        // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
+        chart.setBackgroundPaint(Color.white);
+
+//        final StandardLegend legend = (StandardLegend) chart.getLegend();
+  //      legend.setDisplaySeriesShapes(true);
+        
+        // get a reference to the plot for further customisation...
+        final XYPlot plot = chart.getXYPlot();
+        plot.setBackgroundPaint(Color.lightGray);
+    //    plot.setAxisOffset(new Spacer(Spacer.ABSOLUTE, 5.0, 5.0, 5.0, 5.0));
+        plot.setDomainGridlinePaint(Color.white);
+        plot.setRangeGridlinePaint(Color.white);
+        
+        
+        final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        //renderer.setSeriesLinesVisible(0, false);
+        //renderer.setSeriesShapesVisible(1, false);
+        //plot.setRenderer(renderer);
+
+        // change the auto tick unit selection to integer units only...
+        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        // OPTIONAL CUSTOMISATION COMPLETED.
+                
+        return chart;
+        
+    }
+}
+
+static class GraficoPequeño2 extends JPanel {
+
+    XYSeries series1;
+    double tiempoActual=0;
+public GraficoPequeño2() {
+
+//        super(title);
+
+        final XYDataset dataset = createDataset();
+        final JFreeChart chart = createChart(dataset);
+        final ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(240, 170));
+//        setContentPane(chartPanel);
+        add(chartPanel);
+    }
+    
+
+    public void añadirASerie(double x,double y){
+        series1.add(x,y);
+    }
+
+    /**
+     * Creates a sample dataset.
+     * 
+     * @return a sample dataset.
+     */
+    private XYDataset createDataset() {
+        
+        series1 = new XYSeries("RAM");
+//        series1.add(1.0, 1.0);
+//        series1.add(2.0, 4.0);
+//        series1.add(3.0, 3.0);
+//        series1.add(4.0, 5.0);
+//        series1.add(5.0, 5.0);
+//        series1.add(6.0, 7.0);
+//        series1.add(7.0, 7.0);
+//        series1.add(8.0, 8.0);
+
+//        final XYSeries series2 = new XYSeries("Memoria");
+//        series2.add(1.0, 5.0);
+//        series2.add(2.0, 7.0);
+//        series2.add(3.0, 6.0);
+//        series2.add(4.0, 8.0);
+//        series2.add(5.0, 4.0);
+//        series2.add(6.0, 4.0);
+//        series2.add(7.0, 2.0);
+//        series2.add(8.0, 1.0);
+
+        final XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series1);
+//        dataset.addSeries(series3);
+                
+        return dataset;
+        
+    }
+    
+    /**
+     * Creates a chart.
+     * 
+     * @param dataset  the data for the chart.
+     * 
+     * @return a chart.
+     */
+    private JFreeChart createChart(final XYDataset dataset) {
+        
+        // create the chart...
+        final JFreeChart chart = ChartFactory.createXYLineChart(
+            "",      // chart title
+            "Tiempo",                      // x axis label
+            "GB",                      // y axis label
             dataset,                  // data
             PlotOrientation.VERTICAL,
             true,                     // include legend

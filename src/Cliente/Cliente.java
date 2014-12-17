@@ -564,7 +564,7 @@ static class Grafico extends JPanel {
         
         series1 = new XYSeries("CPU");
 
-        series2 = new XYSeries("Memoria");
+        series2 = new XYSeries("RAM");
 
         final XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series1);
@@ -588,7 +588,7 @@ static class Grafico extends JPanel {
         final JFreeChart chart = ChartFactory.createXYLineChart(
             "",      // chart title
             "Tiempo",                      // x axis label
-            "GB - GHz",                      // y axis label
+            "GHz - GB",                      // y axis label
             dataset,                  // data
             PlotOrientation.VERTICAL,
             true,                     // include legend
