@@ -130,8 +130,6 @@ public class HiloSocket extends Thread{
             labelClave.setText(clave);
             JOptionPane.showMessageDialog(servidor, "La clave es "+clave, "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
             botonDescifrar.setText("Descifrar");
-            labelProcesados.setText("0");
-            labelRestantes.setText("0");
             campoMd5.setText("");
             labelClave.setText("");
             graficoPequeño1.series1.clear();
@@ -141,6 +139,9 @@ public class HiloSocket extends Thread{
                 hilosConex.clear();
             } catch (Throwable ex) {
             }
+            botonDescifrar.setEnabled(true);
+            labelProcesados.setText("0");
+            labelRestantes.setText("2565726409");
         }
 
         public void cambiarGrafico1(String ip) {
@@ -184,8 +185,7 @@ public class Velocidad extends Thread{
                     vel=vel+hilosConex.get(i).vel;
                 }
                 vel=vel*2;
-                servidor.labelVelocidad.setText(vel+" / seg");
-                
+                servidor.labelVelocidad.setText(vel+" p/seg");
                 double cpuTotal=0,ramTotal=0;
                 for (int q = 0; q < hilosConex.size(); q++) {
                     cpuTotal+=Double.parseDouble(hilosConex.get(q).CPUactual)*(hilosConex.get(q).cpuTotal/1024)/100;
@@ -524,23 +524,30 @@ public class Velocidad extends Thread{
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void botonDescifrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDescifrarActionPerformed
-        if(botonDescifrar.getText().equals("Descifrar")){
+        if(!campoMd5.getText().equals("")){
             md5.setClaveMd5(campoMd5.getText());
             hiloSocket=new HiloSocket(this);
             hiloSocket.start();
-            botonDescifrar.setText("Cancelar");
-            return; 
+            botonDescifrar.setEnabled(false);
+//            botonDescifrar.setText("Cancelar");
+//            return; 
+        }else{
+            JOptionPane.showMessageDialog(this, "No ha introducido la clave a descifrar", "Campos Vacíos", JOptionPane.INFORMATION_MESSAGE);
         }
-        if(botonDescifrar.getText().equals("Cancelar")){
-            getHiloSocket().hilosConex.clear();
-            for (int i = 0; i < getHiloSocket().hilosConex.size(); i++) {
-                getHiloSocket().hilosConex.get(i).finalizar();
-            }
-            hiloSocket.stop();
-            botonDescifrar.setText("Descifrar");
-            return;
-        }
+//        if(botonDescifrar.getText().equals("Cancelar")){
+//            getHiloSocket().hilosConex.clear();
+//            for (int i = 0; i < getHiloSocket().hilosConex.size(); i++) {
+//                getHiloSocket().hilosConex.get(i).finalizar();
+//            }
+//            hiloSocket.stop();
+//            botonDescifrar.setText("Descifrar");
+//            return;
+//        }
     }//GEN-LAST:event_botonDescifrarActionPerformed
+
+    public JButton getBotonDescifrar() {
+        return botonDescifrar;
+    }
 
     private void selector1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_selector1ItemStateChanged
         if (selector1.getSelectedItem().toString().equals("...")) {
@@ -670,7 +677,7 @@ static class GraficaPrincipal extends JPanel
                         
                         dialplot.mapDatasetToScale(1, 1);
                         
-                        StandardDialRange standarddialrange = new StandardDialRange(0D, 50D, Color.blue);
+                        StandardDialRange standarddialrange = new StandardDialRange(0D, 30D, Color.blue);
                         standarddialrange.setScaleIndex(1);
                         standarddialrange.setInnerRadius(0.58999999999999997D);
                         standarddialrange.setOuterRadius(0.58999999999999997D);

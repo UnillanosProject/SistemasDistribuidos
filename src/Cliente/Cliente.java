@@ -138,7 +138,7 @@ public class HiloConex extends Thread{
                          estado.setForeground(new java.awt.Color(148, 47, 47));
                          estado.setText("Desconectado");
                          labelMd5.setText("");
-                         labelRestantes.setText("");
+                         labelRestantes.setText("0");
                          labelProcesados.setText("0");
                          labelActual.setText("");
                          hiloProcess.stop();
@@ -149,6 +149,10 @@ public class HiloConex extends Thread{
     
     public void avisarClaveEncontrada(String clave){
         try {
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException ex) {
+//            }
             out.writeUTF("Clave Encontrada");
             out.writeUTF(clave);
         } catch (IOException ex) {
@@ -499,6 +503,10 @@ public class Contador extends Thread{
 //            ipServidor.setText("");
             Inicio=true;
             botonConectar.setText("Conectar");  
+            labelMd5.setText("");
+            labelRestantes.setText("0");
+            labelProcesados.setText("0");
+            labelActual.setText("");
             return;
         }
     }//GEN-LAST:event_botonConectarActionPerformed
