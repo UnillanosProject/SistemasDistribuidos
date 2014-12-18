@@ -122,11 +122,20 @@ public class HiloSocket extends Thread{
         }catch(IOException e){}
         }
         
+        public void eliminarHilo(HilosConex hilo){
+            for (int i = 0; i < hilosConex.size(); i++) {
+                if (hilosConex.get(i)==hilo) {
+                    hilosConex.remove(i);
+                }
+            }
+        }
+        
         public void claveEncontrada(String clave){
 //            servidor.mostrarClave(clave);
             for (int i = 0; i < hilosConex.size(); i++) {
                 hilosConex.get(i).finalizar();
-            }  
+            }
+            hilosConex.clear();
             labelClave.setText(clave);
             JOptionPane.showMessageDialog(servidor, "La clave es "+clave, "Clave encontrada", JOptionPane.INFORMATION_MESSAGE);
             botonDescifrar.setText("Descifrar");
@@ -142,6 +151,7 @@ public class HiloSocket extends Thread{
             botonDescifrar.setEnabled(true);
             labelProcesados.setText("0");
             labelRestantes.setText("2565726409");
+            asignaciones=asignaciones();
         }
 
         public void cambiarGrafico1(String ip) {
@@ -173,7 +183,7 @@ public class HiloSocket extends Thread{
                 }
             }
         }
-
+               
 public class Velocidad extends Thread{
     @Override
     public void run(){

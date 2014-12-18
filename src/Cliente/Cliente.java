@@ -106,7 +106,7 @@ public class HiloConex extends Thread{
                         
             do{
                 mensajeIn = in.readUTF();
-                //System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
+                System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
                                 if (mensajeIn.equals("Iniciar")) {
                                     mensajeIn = in.readUTF();
                                     //System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
@@ -144,7 +144,7 @@ public class HiloConex extends Thread{
                          hiloProcess.stop();
                          hiloLabel.stop();
         } catch (Exception e) { }
-        
+        System.out.println("Me he desconectado");
     }
     
     public void avisarClaveEncontrada(String clave){

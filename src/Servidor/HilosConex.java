@@ -33,7 +33,7 @@ public class HilosConex extends Thread{
                 this.asig=asig;
                 CPUs=new ArrayList<>();
                 RAMs=new ArrayList<>();
-                contador=new Contador();
+                contador=new Contador(this);
         try{
             in = new DataInputStream(socketAlt.getInputStream());
             out = new DataOutputStream(socketAlt.getOutputStream());
@@ -58,26 +58,48 @@ public class HilosConex extends Thread{
                 //System.out.println(ip+" Conectado...");
         try{
                     while(!mensaje.equals("fin")){
-                        contador=new Contador();
+                        contador=new Contador(this);
                         contador.start();
                         mensaje = in.readUTF();
                         contador.stop();
-                        //System.out.println("Cliente ["+numCliente+"] dice: ["+mensaje+"]");
+//                        System.out.println("mensaje: "+mensaje);
                         if (mensaje.equals("Esperando clave")) {
                             mensaje = in.readUTF();
+//                            System.out.println("mensaje: "+mensaje);
                             cpuTotal=Double.parseDouble(mensaje);
                             out.writeUTF(clave);
                             out.writeUTF("Iniciar");
                             asig.setAsignado(true);
                             out.writeUTF(asig.getInI()+","+asig.getInJ());
                         }
+                        if (mensaje.equals("Clave Encontrada")) {
+                            mensaje = in.readUTF();
+//                            System.out.println("mensaje: "+mensaje);
+                            servidor.getHiloSocket().claveEncontrada(mensaje);
+                            System.out.println("Repito en hiloConex");
+                        } 
                         if(mensaje.equals("Procesando")){
                             mensaje = in.readUTF();
+//                            System.out.println("mensaje: "+mensaje);
                             aumProcess(Long.valueOf(mensaje));
                         }  
                         if(mensaje.equals("Estado")){
                             CPUactual = in.readUTF();
+//                            try{
+//                                Double.parseDouble(CPUactual);
+//                            }
+//                            catch(Exception e){CPUactual="0";}
+//                            System.out.println("cpu: "+CPUactual);
                             RAMactual = in.readUTF();
+//                            try{
+//                                Double.parseDouble(RAMactual);
+//                            }
+//                            catch(Exception e){
+//                                mensaje=RAMactual;
+//                                RAMactual="0";
+//                                servidor.getHiloSocket().claveEncontrada(mensaje);
+//                            }
+//                            System.out.println("ram: "+RAMactual);
                             actInfo();
                         } 
                         if (mensaje.equals("Terminado")) {
@@ -87,10 +109,6 @@ public class HilosConex extends Thread{
                             out.writeUTF("Iniciar");
                             out.writeUTF(asig.getInI()+","+asig.getInJ());
                         }
-                        if (mensaje.equals("Clave Encontrada")) {
-                            mensaje = in.readUTF();
-                            servidor.getHiloSocket().claveEncontrada(mensaje);
-                        } 
 //                        Servidor servidor=new Servidor();
 //                        servidor.setClave(mensaje);
 //                        String clave = servidor.recorrer();
@@ -130,6 +148,12 @@ public class HilosConex extends Thread{
 
 public class Contador extends Thread{
     int tiempo=0;
+    HilosConex hilo;
+
+        public Contador(HilosConex hilo) {
+            this.hilo = hilo;
+        }
+    
     @Override
     public void run(){
         for (int i = 0; i < 30; i++) {
@@ -166,8 +190,9 @@ public class Contador extends Thread{
             CPUactual="0";
             RAMactual="0";
             numCliente--;
+            servidor.getHiloSocket().eliminarHilo(hilo);
 //            System.out.println(numCliente);
         }
     }
-}
+    }
 }
