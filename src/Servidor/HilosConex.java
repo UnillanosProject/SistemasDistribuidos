@@ -85,20 +85,20 @@ public class HilosConex extends Thread{
                         }  
                         if(mensaje.equals("Estado")){
                             CPUactual = in.readUTF();
-//                            try{
-//                                Double.parseDouble(CPUactual);
-//                            }
-//                            catch(Exception e){CPUactual="0";}
+                            try{
+                                Double.parseDouble(CPUactual);
+                            }
+                            catch(Exception e){CPUactual="0";}
 //                            System.out.println("cpu: "+CPUactual);
                             RAMactual = in.readUTF();
-//                            try{
-//                                Double.parseDouble(RAMactual);
-//                            }
-//                            catch(Exception e){
-//                                mensaje=RAMactual;
-//                                RAMactual="0";
-//                                servidor.getHiloSocket().claveEncontrada(mensaje);
-//                            }
+                            try{
+                                Double.parseDouble(RAMactual);
+                            }
+                            catch(Exception e){
+                                mensaje=RAMactual;
+                                RAMactual="0";
+                                servidor.getHiloSocket().claveEncontrada(mensaje);
+                            }
 //                            System.out.println("ram: "+RAMactual);
                             actInfo();
                         } 

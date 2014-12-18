@@ -18,6 +18,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.hyperic.sigar.SigarException;
@@ -54,10 +55,15 @@ public class Cliente extends javax.swing.JFrame {
     private Contador contador; 
     private InfoSistema info;
     private long procesadosTotales;
+
+    public JButton getBotonConectar() {
+        return botonConectar;
+    }
     
     public Cliente() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         numPuerto=9999;
         md5=new Md5(this);
         hiloConex=new HiloConex(this);
@@ -106,13 +112,13 @@ public class HiloConex extends Thread{
                         
             do{
                 mensajeIn = in.readUTF();
-                System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
+//                System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
                                 if (mensajeIn.equals("Iniciar")) {
                                     mensajeIn = in.readUTF();
                                     //System.out.println(b.getInetAddress()+" Dice: "+mensajeIn);
                                     String[] asignados=mensajeIn.split(",");
                                     inI=Integer.valueOf(asignados[0]);
-                                    inJ=Integer.valueOf(asignados[1]);
+                                   inJ=Integer.valueOf(asignados[1]);
                                     if(Inicio){
                                         hiloLabel=new HiloLabel(cliente);
                                         hiloLabel.setOut(out);
@@ -142,7 +148,13 @@ public class HiloConex extends Thread{
                          labelProcesados.setText("0");
                          labelActual.setText("");
                          hiloProcess.stop();
+                         System.out.println("Entre 1");
                          hiloLabel.stop();
+                         System.out.println("Entre 2");
+                         try {
+                            hiloConex.finalize();
+                            System.out.println("Entre 3");
+                         } catch (Throwable ex) {}
         } catch (Exception e) { }
         System.out.println("Me he desconectado");
     }

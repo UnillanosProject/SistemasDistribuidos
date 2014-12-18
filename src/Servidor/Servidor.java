@@ -47,6 +47,7 @@ public class Servidor extends javax.swing.JFrame {
     public Servidor() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         hiloSocket=new HiloSocket(this);
         md5=new Md5();
         asignaciones=asignaciones();

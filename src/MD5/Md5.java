@@ -71,6 +71,7 @@ public class Md5 {
                                 actual=caracteres[i]+caracteres[j]+caracteres[k]+caracteres[l]+caracteres[m]+caracteres[n];
                                 if (md5(actual).equals(claveMd5)) {
                                     cliente.getHiloConex().avisarClaveEncontrada(actual);
+                                    System.out.println("Repito md5");
 //                                    System.out.println("Clave "+actual);
                                     return;
                                 }
